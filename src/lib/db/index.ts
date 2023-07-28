@@ -1,7 +1,7 @@
 import { Client } from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import * as schema from './schema';
+import { schema } from './schema';
 import { env } from '$env/dynamic/private';
 
 const client = new Client({
