@@ -1,7 +1,7 @@
 import { todos } from './todos';
-import { users } from './users';
+import * as auth from './auth';
 
 export const schema = {
     todos,
-    users
+    ...auth
 }
