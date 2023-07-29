@@ -11,6 +11,8 @@ const client = new Client({
 await client.connect();
 const db = drizzle(client, { schema });
 
+export type DbClient = typeof db
+
 await migrate(db, { migrationsFolder: 'migrations' });
 
 const todo = await db.select().from(schema.todos);

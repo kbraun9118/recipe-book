@@ -2,9 +2,9 @@ import { integer, pgTable, text, timestamp, unique, uuid } from 'drizzle-orm/pg-
 import { relations } from 'drizzle-orm';
 
 export const users = pgTable('users', {
-	id: uuid('id').primaryKey().defaultRandom(),
+	id: uuid('id').primaryKey().notNull().defaultRandom(),
 	name: text('name'),
-	email: text('email'),
+	email: text('email').notNull().unique(),
 	emailVerified: timestamp('email_verified'),
 	image: text('image')
 });
@@ -15,7 +15,7 @@ export const usersRelations = relations(users, ({ many }) => ({
 }));
 
 export const accounts = pgTable('accounts', {
-	id: uuid('id').primaryKey().defaultRandom(),
+	id: uuid('id').primaryKey().notNull().defaultRandom(),
 	userId: text('userId').notNull(),
 	type: text('type').notNull(),
 	provider: text('provider').notNull(),
@@ -37,14 +37,14 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
 }));
 
 export const sessions = pgTable('sessions', {
-	id: uuid('id').defaultRandom(),
+	id: uuid('id').notNull().defaultRandom(),
 	sessionToken: text('session_token').notNull(),
 	userId: uuid('user_id').notNull(),
-	expires: timestamp('expires')
+	expires: timestamp('expires').notNull()
 });
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
-	account: one(users, {
+	user: one(users, {
 		fields: [sessions.userId],
 		references: [users.id]
 	})
@@ -53,7 +53,7 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 export const verificationTokens = pgTable(
 	'verification_tokens',
 	{
-		identifier: uuid('identifier').primaryKey(),
+		identifier: uuid('identifier').primaryKey().notNull().defaultRandom(),
 		token: text('token').unique().notNull(),
 		expires: timestamp('expires').notNull()
 	},
