@@ -6,6 +6,7 @@ import DrizzleAdapter from '$lib/auth/drizzle-adapter';
 import db from '$lib/db';
 
 export const handle = SvelteKitAuth({
-	providers: [Google({ clientId: env.GOOGLE_ID, clientSecret: env.GOOGLE_SECRET })],
-	adapter: DrizzleAdapter(db)
+  providers: [Google({ clientId: env.GOOGLE_ID, clientSecret: env.GOOGLE_SECRET })],
+  adapter: DrizzleAdapter(db),
+  debug: env.NODE_ENV !== 'production',
 }) satisfies Handle;

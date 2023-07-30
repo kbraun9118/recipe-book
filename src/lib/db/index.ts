@@ -1,24 +1,29 @@
 import { Client } from 'pg';
-import { drizzle } from 'drizzle-orm/node-postgres';
+import { drizzle, type NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { schema } from './schema';
 import { env } from '$env/dynamic/private';
 
+export type DbClient = NodePgDatabase<typeof schema>;
+
+const globalForDrizzle = globalThis as unknown as {
+  db: DbClient | undefined;
+};
+
 const client = new Client({
-	connectionString: env.DATABASE_URL
+  connectionString: env.DATABASE_URL,
 });
 
-await client.connect();
-const db = drizzle(client, { schema });
+if (!globalForDrizzle.db) {
+  await client.connect();
+}
 
-export type DbClient = typeof db
+const isProd = env.NODE_ENV === 'production';
+
+const db = globalForDrizzle.db ?? drizzle(client, { schema, logger: !isProd });
+
+if (!isProd) globalForDrizzle.db = db;
 
 await migrate(db, { migrationsFolder: 'migrations' });
-
-const todo = await db.select().from(schema.todos);
-
-if (todo.length == 0) {
-	await db.insert(schema.todos).values({ name: 'Thing' });
-}
 
 export default db;
