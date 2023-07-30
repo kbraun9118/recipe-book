@@ -1,19 +1,14 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
-  import type { PageServerData } from './$types';
+  import type { ActionData } from './$types';
 
-  export let data: PageServerData;
-
-  let time = new Date().toISOString();
-
-  const interval = setInterval(() => (time = new Date().toISOString()), 100);
-  onDestroy(() => {
-    clearInterval(interval);
-  });
-
-  $: time = time.substring(0, 19);
+  export let form: ActionData;
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<p>Current time is {time}</p>
+<h1>Login</h1>
+<form method="post">
+  <label>Password: <input name="password" type="password" autofocus/></label>
+  <button>Login</button>
+  {#if form?.message}
+    <p class="text-red-500">{form.message}</p>
+  {/if}
+</form>

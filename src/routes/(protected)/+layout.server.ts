@@ -6,7 +6,7 @@ export const load = (async ({ cookies }) => {
   console.log('here', authorized);
   if (!cookies.get('authorized')) {
     console.log('here')
-    redirect(308, '/login');
+    throw redirect(308, '/login');
   }
 }) satisfies LayoutServerLoad;
 
