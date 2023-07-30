@@ -13,8 +13,6 @@
     "generate": "drizzle-kit generate:pg"
   },
   "devDependencies": {
-    "@auth/core": "^0.10.0",
-    "@auth/sveltekit": "^0.3.6",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.20.4",
     "@types/pg": "^8.10.2",
