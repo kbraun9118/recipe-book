@@ -1,4 +1,4 @@
-import { pgEnum, pgTable, serial, text, decimal, primaryKey } from 'drizzle-orm/pg-core';
+import { pgEnum, pgTable, serial, text, decimal, primaryKey, unique } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
 export const recipes = pgTable('recipes', {
@@ -13,16 +13,24 @@ export const recipesRelations = relations(recipes, ({ many }) => ({
   recipeIngredients: many(recipeIngredients),
 }));
 
-export const ingredientType = pgEnum('ingredient_type', ['wet', 'dry', 'other']);
+export const ingredients = pgTable(
+  'ingredients',
+  {
+    id: serial('id').primaryKey(),
+    name: text('name').notNull(),
+    unit: text('unit').notNull(),
+  },
+  (t) => ({
+    name_type_unique: unique('name_type_unique').on(t.name, t.unit),
+  })
+);
 
-export const ingredients = pgTable('ingredients', {
-  id: serial('id').primaryKey(),
-  name: text('name').notNull().unique(),
-  type: ingredientType('type').notNull(),
-});
-
-export const ingredientsRelations = relations(ingredients, ({ many }) => ({
+export const ingredientsRelations = relations(ingredients, ({ many, one }) => ({
   recipeIngredients: many(recipeIngredients),
+  conversion: one(conversions, {
+    fields: [ingredients.id],
+    references: [conversions.ingredientId],
+  }),
 }));
 
 export const recipeIngredients = pgTable(
@@ -35,7 +43,6 @@ export const recipeIngredients = pgTable(
       .notNull()
       .references(() => ingredients.id),
     amount: decimal('amount').notNull(),
-    unit: text('unit').notNull(),
   },
   (t) => ({
     primaryKey: primaryKey(t.recipeId, t.ingredientId),
@@ -49,3 +56,10 @@ export const recipeIngredientsRelations = relations(recipeIngredients, ({ one })
     fields: [recipeIngredients.ingredientId],
   }),
 }));
+
+export const conversions = pgTable('conversions', {
+  ingredientId: serial('ingredient_id')
+    .primaryKey()
+    .references(() => ingredients.id),
+  scale: decimal('scale').notNull(),
+});
