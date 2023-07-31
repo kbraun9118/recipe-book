@@ -1,9 +1,45 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "3cfffa84-d36e-4862-bf8a-8156a02238ae",
+  "id": "48dc382c-ef84-4d6f-b9a3-93307e551847",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
+    "conversions": {
+      "name": "conversions",
+      "schema": "",
+      "columns": {
+        "ingredient_id": {
+          "name": "ingredient_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "scale": {
+          "name": "scale",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "conversions_ingredient_id_ingredients_id_fk": {
+          "name": "conversions_ingredient_id_ingredients_id_fk",
+          "tableFrom": "conversions",
+          "tableTo": "ingredients",
+          "columnsFrom": [
+            "ingredient_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "ingredients": {
       "name": "ingredients",
       "schema": "",
@@ -20,9 +56,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "type": {
-          "name": "type",
-          "type": "ingredient_type",
+        "unit": {
+          "name": "unit",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         }
@@ -31,11 +67,12 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "ingredients_name_unique": {
-          "name": "ingredients_name_unique",
+        "name_type_unique": {
+          "name": "name_type_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "name"
+            "name",
+            "unit"
           ]
         }
       }
@@ -59,12 +96,6 @@
         "amount": {
           "name": "amount",
           "type": "numeric",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "unit": {
-          "name": "unit",
-          "type": "text",
           "primaryKey": false,
           "notNull": true
         }
@@ -156,62 +187,9 @@
           ]
         }
       }
-    },
-    "todos": {
-      "name": "todos",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "completed": {
-          "name": "completed",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "todos_name_unique": {
-          "name": "todos_name_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
-        }
-      }
     }
   },
-  "enums": {
-    "ingredient_type": {
-      "name": "ingredient_type",
-      "values": {
-        "wet": "wet",
-        "dry": "dry",
-        "other": "other"
-      }
-    }
-  },
+  "enums": {},
   "schemas": {},
   "_meta": {
     "schemas": {},
