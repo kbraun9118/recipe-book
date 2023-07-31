@@ -1,11 +1,12 @@
-import { SvelteKitAuth } from '@auth/sveltekit';
-import type { Handle } from '@sveltejs/kit';
-import Google from '@auth/core/providers/google';
-import { env } from '$env/dynamic/private';
-import DrizzleAdapter from '$lib/auth/drizzle-adapter';
-import db from '$lib/db';
+import { env } from "$env/dynamic/private";
+import db, { dbClient } from "$lib/server/db";
+import { migrate } from "drizzle-orm/node-postgres/migrator";
 
-export const handle = SvelteKitAuth({
-	providers: [Google({ clientId: env.GOOGLE_ID, clientSecret: env.GOOGLE_SECRET })],
-	adapter: DrizzleAdapter(db)
-}) satisfies Handle;
+await dbClient.connect();
+
+await migrate(db, { migrationsFolder: 'migrations' });
+
+if (!env.PAGE_LOGIN) {
+    console.error('"PAGE_LOGIN" environment variable must be set');
+    process.exit(1);
+}

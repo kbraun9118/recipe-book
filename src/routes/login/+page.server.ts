@@ -1,7 +1,17 @@
-import type { PageServerLoad } from "./$types";
+import { env } from '$env/dynamic/private';
+import { fail, redirect } from '@sveltejs/kit';
+import type { Actions } from './$types';
 
-export const load = (async (event) => {
-  return {
-    session: await event.locals.getSession(),
-  };
-}) satisfies PageServerLoad;
+export const actions = {
+  async default({ cookies, request }) {
+    const formData = await request.formData();
+    const { password } = Object.fromEntries(formData);
+
+    if (password === env.PAGE_LOGIN) {
+      cookies.set('authorized', 'true');
+      throw redirect(303, '/');
+    }
+
+    return fail(400, { message: 'invalid password' });
+  },
+} satisfies Actions;

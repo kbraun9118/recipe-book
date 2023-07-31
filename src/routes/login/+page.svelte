@@ -1,24 +1,15 @@
-<script>
-    import { signIn, signOut } from "@auth/sveltekit/client"
-    import { page } from "$app/stores"
-  </script>
-  
-  <h1>SvelteKit Auth Example</h1>
-  <p>
-    {#if $page.data.session}
-      {#if $page.data.session.user?.image}
-        <span
-          style="background-image: url('{$page.data.session.user.image}')"
-          class="avatar"
-        />
-      {/if}
-      <span class="signedInText">
-        <small>Signed in as</small><br />
-        <strong>{$page.data.session.user?.name ?? "User"}</strong>
-      </span>
-      <button on:click={() => signOut()} class="button">Sign out</button>
-    {:else}
-      <span class="notSignedInText">You are not signed in</span>
-      <button on:click={() => signIn("google")}>Sign In with GitHub</button>
-    {/if}
-  </p>
+<script lang="ts">
+  import type { ActionData } from './$types';
+
+  export let form: ActionData;
+</script>
+
+<h1>Login</h1>
+<form method="post">
+  <!-- svelte-ignore a11y-autofocus -->
+  <label>Password: <input name="password" type="password" autofocus/></label>
+  <button>Login</button>
+  {#if form?.message}
+    <p class="text-red-500">{form.message}</p>
+  {/if}
+</form>
