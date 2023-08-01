@@ -10,7 +10,7 @@ export const validateFormJson = <
     EventInput = RequestEvent<Params, RouteId>,
     ActionInput = EventInput & { json: T }
 >(schema: Z, action: (event: ActionInput) => OutputData) => {
-    return async (requestEvent: RequestEvent<Params, RouteId>): Promise<OutputData | ActionFailure<{ validation: z.ZodFormattedError<T> }> | ActionFailure<{ message: string }>> => {
+    return async (requestEvent: RequestEvent<Params, RouteId>) => {
         const formData = await requestEvent.request.formData();
         const value = formData.get('value')
 

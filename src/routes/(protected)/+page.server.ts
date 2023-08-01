@@ -10,11 +10,11 @@ import { validateFormJson } from '$lib/validation';
 
 export const actions = {
   logout({ cookies }) {
-    cookies.delete('authorized')
+    cookies.delete('authorized');
   },
-  doThing: validateFormJson(DataSchema, async ({ request, json }) => {
+  doThing: validateFormJson(DataSchema, async ({ json }) => {
     console.log(json);
-  })
+  }),
   // doThing: async ({ request }) => {
   //   const formData = await request.formData();
   //   const value = formData.get('value')
@@ -30,4 +30,4 @@ export const actions = {
 
   //   return fail(400, { message: 'must pass json to "value" form data' })
   // }
-} satisfies Actions
+} satisfies Actions;

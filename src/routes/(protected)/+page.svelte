@@ -3,7 +3,7 @@
   import type { ActionData, SubmitFunction } from './$types';
   import type { Data } from './form-data';
 
-  export let form: ActionData
+  export let form: ActionData;
 
   let formData: Data = {
     name: '',
@@ -22,20 +22,24 @@
   };
 </script>
 
-<h1>Welcome to Recipe Book</h1>
+<h2 class="h2">Welcome to Recipe Book</h2>
 <p>Authorized</p>
 
-<form method="post" action="?/doThing" use:enhance={formSubmission}>
-  <label>Name: <input bind:value={formData.name} /> </label>
-  <label>Age: <input bind:value={formData.age} type="number"/> </label>
+<form class="" method="post" action="?/doThing" use:enhance={formSubmission}>
+  <label class="label"
+    ><span>Name: </span><input class="input" bind:value={formData.name} />
+  </label>
+  <label class="label">Age: <input class="input" bind:value={formData.age} type="number" /> </label>
   {#each formData.items as _, i}
-    <label>Item {i}: <input bind:value={formData.items[i].value} /></label>
+    <label class="label"
+      >Item {i}: <input class="input" bind:value={formData.items[i].value} /></label
+    >
   {/each}
-  <button>Submit</button>
+  <button class="btn variant-filled">Submit</button>
 </form>
 <code>{JSON.stringify(formData)}</code>
-<br>
+<br />
 {#if form}
- {form.validation?.name?._errors[0]}
+  {form.validation?.name?._errors[0]}
   <pre>{JSON.stringify(form.validation?._errors, null, 2)}</pre>
 {/if}
