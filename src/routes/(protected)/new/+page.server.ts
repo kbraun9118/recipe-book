@@ -4,7 +4,7 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
   return {
-    foo: 'bar'
+    foo: 'bar',
   };
 }) satisfies PageServerLoad;
 

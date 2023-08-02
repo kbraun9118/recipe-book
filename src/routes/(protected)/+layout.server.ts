@@ -6,4 +6,3 @@ export const load = (async ({ cookies }) => {
     throw redirect(308, '/login');
   }
 }) satisfies LayoutServerLoad;
-

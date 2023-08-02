@@ -6,14 +6,22 @@ import type { Actions, PageServerLoad } from './$types';
 const formSchema = z.object({
   name: z.string().min(2),
   age: z.number().int().nullable(),
-  items: z.array(z.object({
-    value: z.string().min(2)
-  })).min(2)
+  items: z
+    .array(
+      z.object({
+        value: z.string().min(2),
+      })
+    )
+    .min(2),
 });
 
 export const load = (async () => {
   return {
-    form: await superValidate({ name: '', age: null, items: [{ value: '' }, { value: '' }] }, formSchema, { errors: false })
+    form: await superValidate(
+      { name: '', age: null, items: [{ value: '' }, { value: '' }] },
+      formSchema,
+      { errors: false }
+    ),
   };
 }) satisfies PageServerLoad;
 
@@ -24,13 +32,13 @@ export const actions = {
   doThing: async ({ request }) => {
     const form = await superValidate(request, formSchema);
 
-    console.log(JSON.stringify(form))
+    console.log(JSON.stringify(form));
 
     if (!form.valid) {
-      return fail(400, { form })
+      return fail(400, { form });
     }
 
-    return { form }
+    return { form };
   },
   // doThing: async ({ request }) => {
   //   const formData = await request.formData();

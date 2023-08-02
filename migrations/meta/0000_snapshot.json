@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "48dc382c-ef84-4d6f-b9a3-93307e551847",
+  "id": "ccbf17b5-592e-40e3-9310-469e0f755b9e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "conversions": {
@@ -27,12 +27,8 @@
           "name": "conversions_ingredient_id_ingredients_id_fk",
           "tableFrom": "conversions",
           "tableTo": "ingredients",
-          "columnsFrom": [
-            "ingredient_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["ingredient_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -70,10 +66,7 @@
         "name_type_unique": {
           "name": "name_type_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name",
-            "unit"
-          ]
+          "columns": ["name", "unit"]
         }
       }
     },
@@ -106,12 +99,8 @@
           "name": "recipeIngredients_recipe_id_recipes_id_fk",
           "tableFrom": "recipeIngredients",
           "tableTo": "recipes",
-          "columnsFrom": [
-            "recipe_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["recipe_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -119,12 +108,8 @@
           "name": "recipeIngredients_ingredient_id_ingredients_id_fk",
           "tableFrom": "recipeIngredients",
           "tableTo": "ingredients",
-          "columnsFrom": [
-            "ingredient_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["ingredient_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -132,10 +117,7 @@
       "compositePrimaryKeys": {
         "recipeIngredients_recipe_id_ingredient_id": {
           "name": "recipeIngredients_recipe_id_ingredient_id",
-          "columns": [
-            "recipe_id",
-            "ingredient_id"
-          ]
+          "columns": ["recipe_id", "ingredient_id"]
         }
       },
       "uniqueConstraints": {}
@@ -182,9 +164,7 @@
         "recipes_name_unique": {
           "name": "recipes_name_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
+          "columns": ["name"]
         }
       }
     }
