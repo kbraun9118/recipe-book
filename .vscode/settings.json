@@ -10,5 +10,6 @@
             "username": "postgres",
             "password": "postgres"
         }
-    ]
+    ],
+    "search.useIgnoreFiles": true
 }

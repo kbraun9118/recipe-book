@@ -3,7 +3,9 @@ import { recipes } from '../../../lib/server/db/schema/recipe';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
-  return {};
+  return {
+    foo: 'bar'
+  };
 }) satisfies PageServerLoad;
 
 export const actions = {

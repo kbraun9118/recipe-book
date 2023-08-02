@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { ActionData, PageServerData, SubmitFunction } from './$types';
   import { superForm } from 'sveltekit-superforms/client';
+  import type { PageServerData } from './$types';
 
   export let data: PageServerData;
 
@@ -10,11 +10,15 @@
 <h2 class="h2">Welcome to Recipe Book</h2>
 <p>Authorized</p>
 
-<form method="post" action="?/doThing" use:enhance>
-  <label class="label"><span>Name: </span><input class="input" bind:value={$form.name} /> </label>
-  <label class="label">Age: <input class="input" bind:value={$form.age} type="number" /> </label>
+<form class="" method="post" action="?/doThing" use:enhance>
+  <label class="label"><span>Name</span><input class="input" bind:value={$form.name} /> </label>
+  <label class="label"
+    ><span>Age</span><input class="input" bind:value={$form.age} type="number" />
+  </label>
   {#each $form.items as _, i}
-    <label class="label">Item {i}: <input class="input" bind:value={$form.items[i].value} /></label>
+    <label class="label"
+      ><span>Item {i}</span><input class="input" bind:value={$form.items[i].value} /></label
+    >
   {/each}
   <button class="btn variant-filled">Submit</button>
 </form>

@@ -7,6 +7,7 @@
 
 <h2>New Recipe</h2>
 <form method="post">
+  {data.foo}
   <label class="label">Name: <input class="input" name="name" /></label>
   <label class="label">Name: <input class="input" name="name" /></label>
   <button>Create</button>

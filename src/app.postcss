@@ -1,21 +1,15 @@
-/* Write your global styles here, in PostCSS syntax */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  input[type='number'] {
-    -moz-appearance: textfield;
-  }
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
 
 html,
 body {
-  @apply h-full overflow-hidden;
+  @apply h-full;
 }
