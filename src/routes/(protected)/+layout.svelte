@@ -6,14 +6,20 @@
 <AppShell>
   <svelte:fragment slot="header">
     <AppBar gridColumns="grid-cols-2" slotTrail="place-content-end">
-      <a href="/">Recipe Book</a>
+      <a class="font-bold text-xl" href="/">Recipe Book</a>
       <svelte:fragment slot="trail">
-        <nav class="flex">
-          <a href="/new">Add Recipe</a>
-          <form method="post" action="?/logout" use:enhance><button>Logout</button></form>
+        <nav class="flex space-x-4">
+          <a href="/new" class="btn hover:variant-soft-primary">Add Recipe</a>
+          <form method="post" action="?/logout" use:enhance>
+            <button class="btn hover:variant-soft-primary">Logout</button>
+          </form>
         </nav>
       </svelte:fragment>
     </AppBar>
   </svelte:fragment>
-  <slot />
+  <div class="flex">
+    <div class="m-auto">
+      <slot />
+    </div>
+  </div>
 </AppShell>

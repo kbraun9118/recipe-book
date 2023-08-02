@@ -4,12 +4,18 @@
   export let form: ActionData;
 </script>
 
-<h1>Login</h1>
-<form method="post">
-  <!-- svelte-ignore a11y-autofocus -->
-  <label>Password: <input name="password" type="password" autofocus/></label>
-  <button>Login</button>
-  {#if form?.message}
-    <p class="text-red-500">{form.message}</p>
-  {/if}
-</form>
+<main class="flex p-5">
+  <div class="m-auto flex flex-col card p-4 space-y-5">
+    <h1 class="h1">Login</h1>
+    <form class="w-full space-y-4" method="post">
+      <!-- svelte-ignore a11y-autofocus -->
+      <label class="label"
+        >Password<input class="input" name="password" type="password" autofocus /></label
+      >
+      <button class="btn variant-filled-primary">Login</button>
+      {#if form?.message}
+        <p class="text-red-500">{form.message}</p>
+      {/if}
+    </form>
+  </div>
+</main>
