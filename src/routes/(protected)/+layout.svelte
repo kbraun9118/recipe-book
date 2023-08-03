@@ -17,8 +17,8 @@
       </svelte:fragment>
     </AppBar>
   </svelte:fragment>
-  <div class="flex">
-    <div class="m-auto py-2">
+  <div class="flex justify-center px-5 lg:p-0">
+    <div class="w-full lg:w-4/6 m-auto py-2">
       <slot />
     </div>
   </div>

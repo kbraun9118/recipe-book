@@ -50,7 +50,7 @@ export const ingredientsRelations = relations(ingredients, ({ many, one }) => ({
 }));
 
 export const recipeIngredients = pgTable(
-  'recipeIngredients',
+  'recipe_ingredients',
   {
     recipeId: serial('recipe_id')
       .notNull()

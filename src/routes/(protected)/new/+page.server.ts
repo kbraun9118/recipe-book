@@ -45,10 +45,10 @@ export const actions = {
 
     const data = form.data;
 
-    const [{ id: recipeId }] = await db
+    const [{ recipeId }] = await db
       .insert(recipes)
       .values({ name: data.name, description: data.description, notes: data.notes, url: data.url })
-      .returning();
+      .returning({recipeId: recipes.id});
 
     console.log('recipeId: ', recipeId);
 
@@ -68,11 +68,14 @@ export const actions = {
           where: query,
         });
 
-      const [{ id: ingredientId }] = await db.query.ingredients.findMany({ where: query });
+      const ingredientId = await db.query.ingredients.findFirst({
+        where: query,
+        columns: { id: true },
+      });
 
       await db
         .insert(recipeIngredients)
-        .values({ ingredientId, recipeId, amount: ingredient.amount });
+        .values({ ingredientId: ingredientId?.id, recipeId, amount: ingredient.amount });
     }
 
     throw redirect(303, `/recipes/${recipeId}`);

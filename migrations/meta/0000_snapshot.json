@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "ccbf17b5-592e-40e3-9310-469e0f755b9e",
+  "id": "76857b66-d27c-4843-a649-26a8c77e6cb7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "conversions": {
@@ -16,7 +16,7 @@
         },
         "scale": {
           "name": "scale",
-          "type": "numeric",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         }
@@ -27,8 +27,12 @@
           "name": "conversions_ingredient_id_ingredients_id_fk",
           "tableFrom": "conversions",
           "tableTo": "ingredients",
-          "columnsFrom": ["ingredient_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "ingredient_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -54,7 +58,7 @@
         },
         "unit": {
           "name": "unit",
-          "type": "text",
+          "type": "units",
           "primaryKey": false,
           "notNull": true
         }
@@ -66,12 +70,15 @@
         "name_type_unique": {
           "name": "name_type_unique",
           "nullsNotDistinct": false,
-          "columns": ["name", "unit"]
+          "columns": [
+            "name",
+            "unit"
+          ]
         }
       }
     },
-    "recipeIngredients": {
-      "name": "recipeIngredients",
+    "recipe_ingredients": {
+      "name": "recipe_ingredients",
       "schema": "",
       "columns": {
         "recipe_id": {
@@ -88,36 +95,47 @@
         },
         "amount": {
           "name": "amount",
-          "type": "numeric",
+          "type": "real",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "recipeIngredients_recipe_id_recipes_id_fk": {
-          "name": "recipeIngredients_recipe_id_recipes_id_fk",
-          "tableFrom": "recipeIngredients",
+        "recipe_ingredients_recipe_id_recipes_id_fk": {
+          "name": "recipe_ingredients_recipe_id_recipes_id_fk",
+          "tableFrom": "recipe_ingredients",
           "tableTo": "recipes",
-          "columnsFrom": ["recipe_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "recipe_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "recipeIngredients_ingredient_id_ingredients_id_fk": {
-          "name": "recipeIngredients_ingredient_id_ingredients_id_fk",
-          "tableFrom": "recipeIngredients",
+        "recipe_ingredients_ingredient_id_ingredients_id_fk": {
+          "name": "recipe_ingredients_ingredient_id_ingredients_id_fk",
+          "tableFrom": "recipe_ingredients",
           "tableTo": "ingredients",
-          "columnsFrom": ["ingredient_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "ingredient_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
-        "recipeIngredients_recipe_id_ingredient_id": {
-          "name": "recipeIngredients_recipe_id_ingredient_id",
-          "columns": ["recipe_id", "ingredient_id"]
+        "recipe_ingredients_recipe_id_ingredient_id": {
+          "name": "recipe_ingredients_recipe_id_ingredient_id",
+          "columns": [
+            "recipe_id",
+            "ingredient_id"
+          ]
         }
       },
       "uniqueConstraints": {}
@@ -164,12 +182,25 @@
         "recipes_name_unique": {
           "name": "recipes_name_unique",
           "nullsNotDistinct": false,
-          "columns": ["name"]
+          "columns": [
+            "name"
+          ]
         }
       }
     }
   },
-  "enums": {},
+  "enums": {
+    "units": {
+      "name": "units",
+      "values": {
+        "grams": "grams",
+        "cups": "cups",
+        "tablespoons": "tablespoons",
+        "teaspoons": "teaspoons",
+        "ounces": "ounces"
+      }
+    }
+  },
   "schemas": {},
   "_meta": {
     "schemas": {},
