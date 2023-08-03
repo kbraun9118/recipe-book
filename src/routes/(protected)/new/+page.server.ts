@@ -2,11 +2,11 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 import {
   ingredients,
-  isnertRecipesSchema as insertRecipesSchema,
+  insertRecipesSchema,
   recipeIngredients,
   recipes,
   unitEnum,
-} from '../../../lib/server/db/schema/recipe';
+} from '$lib/server/db/schema/recipe';
 import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import db from '$lib/server/db';
@@ -37,8 +37,6 @@ export const actions = {
   async default({ request }) {
     const form = await superValidate(request, newRecipeSchema);
 
-    console.log(JSON.stringify(form));
-
     if (!form.valid) {
       return fail(400, { form });
     }
@@ -47,12 +45,16 @@ export const actions = {
 
     const [{ recipeId }] = await db
       .insert(recipes)
-      .values({ name: data.name, description: data.description, notes: data.notes, url: data.url })
-      .returning({recipeId: recipes.id});
+      .values({
+        name: data.name,
+        description: data.description,
+        notes: data.notes,
+        url: data.url,
+        instructions: data.instructions,
+      })
+      .returning({ recipeId: recipes.id });
 
-    console.log('recipeId: ', recipeId);
-
-    for (let ingredient of data.ingredients) {
+    for (const ingredient of data.ingredients) {
       const query = and(
         eq(ingredients.name, ingredient.name),
         eq(ingredients.unit, ingredient.unit)
@@ -61,7 +63,7 @@ export const actions = {
       await db
         .insert(ingredients)
         .values({
-          name: ingredient.name,
+          name: ingredient.name.trim().toLowerCase(),
           unit: ingredient.unit,
         })
         .onConflictDoNothing({

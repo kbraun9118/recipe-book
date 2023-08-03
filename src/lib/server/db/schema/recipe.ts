@@ -1,24 +1,18 @@
 import { relations } from 'drizzle-orm';
-import {
-  pgEnum,
-  pgTable,
-  primaryKey,
-  real,
-  serial,
-  text,
-  unique
-} from 'drizzle-orm/pg-core';
+import { pgEnum, pgTable, primaryKey, real, serial, text, unique } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
+import ingredientUnits from '../../../ingredient-units';
 
 export const recipes = pgTable('recipes', {
   id: serial('id').primaryKey(),
   name: text('name').notNull().unique(),
-  description: text('description'),
+  description: text('description').notNull(),
   url: text('url'),
   notes: text('notes'),
+  instructions: text('instructions').notNull(),
 });
 
-export const isnertRecipesSchema = createInsertSchema(recipes, {
+export const insertRecipesSchema = createInsertSchema(recipes, {
   name: (s) => s.name.min(2),
   url: (s) => s.url.url(),
 });
@@ -27,7 +21,7 @@ export const recipesRelations = relations(recipes, ({ many }) => ({
   recipeIngredients: many(recipeIngredients),
 }));
 
-export const unitEnum = pgEnum('units', ['grams', 'cups', 'tablespoons', 'teaspoons', 'ounces']);
+export const unitEnum = pgEnum('units', ingredientUnits);
 
 export const ingredients = pgTable(
   'ingredients',

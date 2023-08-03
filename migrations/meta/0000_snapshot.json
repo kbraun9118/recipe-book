@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "76857b66-d27c-4843-a649-26a8c77e6cb7",
+  "id": "64ee31e0-e79f-492d-a9a5-88f99efc04c8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "conversions": {
@@ -160,7 +160,7 @@
           "name": "description",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "url": {
           "name": "url",
@@ -173,6 +173,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "instructions": {
+          "name": "instructions",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -197,7 +203,9 @@
         "cups": "cups",
         "tablespoons": "tablespoons",
         "teaspoons": "teaspoons",
-        "ounces": "ounces"
+        "ounces": "ounces",
+        "count": "count",
+        "pinch": "pinch"
       }
     }
   },
