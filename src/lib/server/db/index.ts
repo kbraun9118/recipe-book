@@ -10,7 +10,7 @@ const globalForDrizzle = globalThis as unknown as {
 };
 
 export const dbClient = new pg.Client({
-  connectionString: env.DATABASE_URL,
+  connectionString: env.DATABASE_URL || '',
 });
 
 const isProd = env.NODE_ENV === 'production';

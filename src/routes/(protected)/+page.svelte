@@ -7,10 +7,10 @@
   const { form, enhance, errors, allErrors } = superForm(data.form, { dataType: 'json' });
 </script>
 
-<h2 class="h2">Welcome to Recipe Book</h2>
+<h1 class="h1">Welcome to Recipe Book</h1>
 <p>Authorized</p>
 
-<form class="" method="post" action="?/doThing" use:enhance>
+<form class="space-y-3" method="post" action="?/doThing" use:enhance>
   <label class="label"><span>Name</span><input class="input" bind:value={$form.name} /> </label>
   <label class="label"
     ><span>Age</span><input class="input" bind:value={$form.age} type="number" />

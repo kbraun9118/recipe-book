@@ -10,7 +10,7 @@
       <svelte:fragment slot="trail">
         <nav class="flex space-x-4">
           <a href="/new" class="btn hover:variant-soft-primary">Add Recipe</a>
-          <form method="post" action="?/logout" use:enhance>
+          <form method="post" action="/?/logout" use:enhance>
             <button class="btn hover:variant-soft-primary">Logout</button>
           </form>
         </nav>
@@ -18,7 +18,7 @@
     </AppBar>
   </svelte:fragment>
   <div class="flex">
-    <div class="m-auto">
+    <div class="m-auto py-2">
       <slot />
     </div>
   </div>
