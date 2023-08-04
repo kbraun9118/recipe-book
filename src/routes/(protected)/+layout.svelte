@@ -9,7 +9,7 @@
       <a class="font-bold text-xl" href="/">Recipe Book</a>
       <svelte:fragment slot="trail">
         <nav class="flex space-x-4">
-          <a href="/new" class="btn hover:variant-soft-primary">Add Recipe</a>
+          <a href="/recipes/new" class="btn hover:variant-soft-primary">Add Recipe</a>
           <form method="post" action="/?/logout" use:enhance>
             <button class="btn hover:variant-soft-primary">Logout</button>
           </form>

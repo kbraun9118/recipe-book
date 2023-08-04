@@ -4,13 +4,15 @@
   export let data: PageServerData;
 </script>
 
-<div>
+<div class="space-y-2">
   <h1 class="h1">Welcome to Recipe Book</h1>
-  <ul>
+  <ul class="space-y-2">
     {#each data.recipes as recipe (recipe.id)}
       <li>
-        <a class="w-full card variant-ghost-primary hover:variant-ghost-secondary" href={`/recipes/${recipe.id}`}
-          >{JSON.stringify(recipe)}</a>
+        <a class="block card card-hover variant-glass-primary p-4" href={`/recipes/${recipe.id}`}>
+          <h2 class="h3">{recipe.name}</h2>
+          <p>{recipe.description}</p>
+        </a>
       </li>
     {/each}
   </ul>
