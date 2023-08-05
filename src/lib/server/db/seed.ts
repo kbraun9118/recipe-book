@@ -1,5 +1,5 @@
 import type { DbClient } from '$lib/server/db/index';
-import { ingredients, recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
+import { conversions, ingredients, recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
 import { eq, or, sql } from 'drizzle-orm';
 
 export async function seedDB(db: DbClient) {
@@ -69,6 +69,8 @@ export async function seedDB(db: DbClient) {
       .returning({
         id: ingredients.id,
       });
+
+    await db.insert(conversions).values({ ingredientId: flour, scale: 120, to: 'grams' });
 
     await db.insert(recipeIngredients).values([
       { recipeId: chocolateChipCookies, ingredientId: saltedButter, amount: 8 },

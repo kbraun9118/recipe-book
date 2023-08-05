@@ -6,7 +6,8 @@ END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "conversions" (
 	"ingredient_id" serial PRIMARY KEY NOT NULL,
-	"scale" real NOT NULL
+	"scale" real NOT NULL,
+	"unit" "units" NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ingredients" (

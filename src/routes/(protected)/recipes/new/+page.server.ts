@@ -1,11 +1,10 @@
 import { newRecipeSchema } from '$lib/schemas';
 import db from '$lib/server/db';
-import { ingredients, recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
+import { recipes } from '$lib/server/db/schema/recipe';
+import { addIngredient } from '$lib/server/functions';
 import { fail, redirect } from '@sveltejs/kit';
-import { and, eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
-import { addIngredient } from '$lib/server/functions';
 
 export const load = (async () => {
   return {
@@ -13,7 +12,8 @@ export const load = (async () => {
       {
         ingredients: [{ name: '', unit: 'cups', amount: 0 }],
       },
-      newRecipeSchema
+      newRecipeSchema,
+      { errors: false }
     ),
   };
 }) satisfies PageServerLoad;
@@ -21,6 +21,8 @@ export const load = (async () => {
 export const actions = {
   async default({ request }) {
     const form = await superValidate(request, newRecipeSchema);
+
+    console.log(form.data)
 
     if (!form.valid) {
       return fail(400, { form });

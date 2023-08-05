@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "56307477-d356-410d-95f9-6c0ed0fc4d19",
+  "id": "8801dfb8-3cb7-4bec-864a-f4a4bd0af79b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "conversions": {
@@ -17,6 +17,12 @@
         "scale": {
           "name": "scale",
           "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "unit": {
+          "name": "unit",
+          "type": "units",
           "primaryKey": false,
           "notNull": true
         }

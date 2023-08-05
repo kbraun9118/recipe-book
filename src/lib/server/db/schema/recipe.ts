@@ -2,6 +2,7 @@ import { relations } from 'drizzle-orm';
 import { pgEnum, pgTable, primaryKey, real, serial, text, unique } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import ingredientUnits from '../../../ingredient-units';
+import { z } from 'zod';
 
 export const recipes = pgTable('recipes', {
   id: serial('id').primaryKey(),
@@ -15,6 +16,9 @@ export const recipes = pgTable('recipes', {
 export const insertRecipesSchema = createInsertSchema(recipes, {
   name: (s) => s.name.min(2),
   url: (s) => s.url.url(),
+  description: (s) => s.description.min(10),
+  notes: (s) => s.notes.min(10).optional().or(z.literal('')),
+  instructions: (s) => s.instructions.min(10),
 });
 
 export const recipesRelations = relations(recipes, ({ many }) => ({
@@ -72,4 +76,5 @@ export const conversions = pgTable('conversions', {
     .primaryKey()
     .references(() => ingredients.id),
   scale: real('scale').notNull(),
+  to: unitEnum('unit').notNull(),
 });

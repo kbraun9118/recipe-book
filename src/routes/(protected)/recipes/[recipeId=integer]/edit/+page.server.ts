@@ -1,11 +1,11 @@
+import { newRecipeSchema } from '$lib/schemas';
+import db from '$lib/server/db';
+import { recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
+import { addIngredient } from '$lib/server/functions';
+import { fail } from '@sveltejs/kit';
+import { and, eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
-import { newRecipeSchema } from '$lib/schemas';
-import { fail } from '@sveltejs/kit';
-import db from '$lib/server/db';
-import { ingredients, recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
-import { and, eq } from 'drizzle-orm';
-import { addIngredient } from '$lib/server/functions';
 
 export const load = (async ({ parent }) => {
   const { recipe } = await parent();
@@ -79,7 +79,7 @@ export const actions = {
       .filter((ri) => data.ingredients.every((i) => ri.name !== i.name || i.unit !== ri.unit));
 
     Promise.all([
-      ...added.map((ingredient) => addIngredient(recipe?.id!, ingredient)),
+      ...added.map((ingredient) => addIngredient(recipe?.id || -1, ingredient)),
       ...(updated?.map(({ ingredient, recipeIngredient }) =>
         db
           .update(recipeIngredients)
@@ -91,7 +91,7 @@ export const actions = {
             )
           )
       ) || []),
-      ...removed?.map((ingredient) =>
+      ...(removed?.map((ingredient) =>
         db
           .delete(recipeIngredients)
           .where(
@@ -100,7 +100,7 @@ export const actions = {
               eq(recipeIngredients.ingredientId, ingredient.id)
             )
           )
-      ) || [],
+      ) || []),
     ]);
 
     console.log('updated', updated);
