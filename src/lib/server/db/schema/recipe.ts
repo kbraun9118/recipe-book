@@ -78,3 +78,7 @@ export const conversions = pgTable('conversions', {
   scale: real('scale').notNull(),
   to: unitEnum('unit').notNull(),
 });
+
+export const insertConversionsSchema = createInsertSchema(conversions, {
+  scale: (s) => s.scale.gt(0),
+});
