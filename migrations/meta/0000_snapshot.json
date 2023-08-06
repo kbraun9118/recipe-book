@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "57c5bc1d-fd2d-4078-a8b5-b5cfbfbcf138",
+  "id": "ebdfe351-1222-4084-be79-c1aaa418e9ab",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "conversions": {
@@ -11,7 +11,7 @@
         "ingredient_id": {
           "name": "ingredient_id",
           "type": "serial",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "scale": {
@@ -43,7 +43,15 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "conversions_ingredient_id_unit": {
+          "name": "conversions_ingredient_id_unit",
+          "columns": [
+            "ingredient_id",
+            "unit"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "ingredients": {

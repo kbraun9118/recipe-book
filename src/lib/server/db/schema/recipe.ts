@@ -15,7 +15,7 @@ export const recipes = pgTable('recipes', {
 
 export const insertRecipesSchema = createInsertSchema(recipes, {
   name: (s) => s.name.min(2),
-  url: (s) => s.url.url(),
+  url: (s) => s.url.url().optional().or(z.literal('')),
   description: (s) => s.description.min(10),
   notes: (s) => s.notes.min(10).optional().or(z.literal('')),
   instructions: (s) => s.instructions.min(10),
@@ -71,13 +71,24 @@ export const recipeIngredientsRelations = relations(recipeIngredients, ({ one })
   }),
 }));
 
-export const conversions = pgTable('conversions', {
-  ingredientId: serial('ingredient_id')
-    .primaryKey()
-    .references(() => ingredients.id),
-  scale: real('scale').notNull(),
-  to: unitEnum('unit').notNull(),
-});
+export const conversions = pgTable(
+  'conversions',
+  {
+    ingredientId: serial('ingredient_id').references(() => ingredients.id),
+    scale: real('scale').notNull(),
+    to: unitEnum('unit').notNull(),
+  },
+  (t) => ({
+    primaryKey: primaryKey(t.ingredientId, t.to),
+  })
+);
+
+export const conversionsRelations = relations(conversions, ({ one }) => ({
+  ingredient: one(ingredients, {
+    fields: [conversions.ingredientId],
+    references: [ingredients.id],
+  }),
+}));
 
 export const insertConversionsSchema = createInsertSchema(conversions, {
   scale: (s) => s.scale.gt(0),

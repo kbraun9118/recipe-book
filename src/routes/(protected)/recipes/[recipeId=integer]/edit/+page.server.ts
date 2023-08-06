@@ -2,7 +2,7 @@ import { newRecipeSchema } from '$lib/schemas';
 import db from '$lib/server/db';
 import { recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
 import { addIngredient } from '$lib/server/functions';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
@@ -103,8 +103,6 @@ export const actions = {
       ) || []),
     ]);
 
-    console.log('updated', updated);
-    console.log('added', added);
-    console.log('removed', removed);
+    throw redirect(304, `/recipes/${params.recipeId}`)
   },
 } satisfies Actions;

@@ -5,9 +5,10 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "conversions" (
-	"ingredient_id" serial PRIMARY KEY NOT NULL,
+	"ingredient_id" serial NOT NULL,
 	"scale" real NOT NULL,
-	"unit" "units" NOT NULL
+	"unit" "units" NOT NULL,
+	CONSTRAINT conversions_ingredient_id_unit PRIMARY KEY("ingredient_id","unit")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ingredients" (
