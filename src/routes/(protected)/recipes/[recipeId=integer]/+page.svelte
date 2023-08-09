@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import type { PageData } from './$types';
-  import { type PopupSettings, popup } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 
@@ -76,15 +76,17 @@
         <li>
           <span>{formatAmount(ingredient.amount)}</span>
           <span>{formatUnit(ingredient)}</span>
-          {#if ingredient.ingredient.conversion}
+          {#if ingredient.ingredient.conversions.length > 0}
             <span
               class="font-bold border-b-2 border-dotted [&>*]:pointer-events-none"
               use:popup={popupHover}>{ingredient.ingredient.name}</span>
             <div class="card p-4 variant-glass-secondary" data-popup="popupHover">
-              <p>
-                {ingredient.amount * ingredient.ingredient.conversion.scale}
-                {ingredient.ingredient.conversion.to}
-              </p>
+              {#each ingredient.ingredient.conversions as conversion (conversion.to + conversion.ingredientId)}
+                <p>
+                  {ingredient.amount * conversion.scale}
+                  {conversion.to}
+                </p>
+              {/each}
               <div class="arrow variant-glass-secondary" />
             </div>
           {:else}

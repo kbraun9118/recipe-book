@@ -39,12 +39,9 @@ export const ingredients = pgTable(
   })
 );
 
-export const ingredientsRelations = relations(ingredients, ({ many, one }) => ({
+export const ingredientsRelations = relations(ingredients, ({ many }) => ({
   recipeIngredients: many(recipeIngredients),
-  conversion: one(conversions, {
-    fields: [ingredients.id],
-    references: [conversions.ingredientId],
-  }),
+  conversions: many(conversions),
 }));
 
 export const recipeIngredients = pgTable(
