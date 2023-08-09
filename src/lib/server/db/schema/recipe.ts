@@ -71,7 +71,7 @@ export const recipeIngredientsRelations = relations(recipeIngredients, ({ one })
 export const conversions = pgTable(
   'conversions',
   {
-    ingredientId: serial('ingredient_id').references(() => ingredients.id),
+    ingredientId: serial('ingredient_id').notNull().references(() => ingredients.id),
     scale: real('scale').notNull(),
     to: unitEnum('unit').notNull(),
   },

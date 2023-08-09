@@ -9,7 +9,7 @@
     return instructions
       .split('*')
       .splice(1)
-      .map((line) => `<li>${line}</li>`)
+      .map((line, i) => `<li><span class="badge-icon p-2 variant-soft-primary">${i + 1}</span><span>${line}</span></li>`)
       .join('');
   }
 
@@ -83,7 +83,7 @@
             <div class="card p-4 variant-glass-secondary" data-popup="popupHover">
               {#each ingredient.ingredient.conversions as conversion (conversion.to + conversion.ingredientId)}
                 <p>
-                  {ingredient.amount * conversion.scale}
+                  {ingredient.amount * conversion.scale} {JSON.stringify(conversion)}
                   {conversion.to}
                 </p>
               {/each}
@@ -98,7 +98,7 @@
   </div>
   <div>
     <h2 class="h2">Instructions</h2>
-    <ol class="list-decimal">
+    <ol class="list space-y-2">
       {@html formatInstructions(data.recipe.instructions)}
     </ol>
   </div>

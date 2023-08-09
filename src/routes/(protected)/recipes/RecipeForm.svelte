@@ -36,12 +36,12 @@
             class="input"
             class:input-error={$errors.name}
             bind:value={$form.name} /></label>
-        <ErrorText fieldName='name' text={$errors.name} />
+        <ErrorText fieldName="name" text={$errors.name} />
       </div>
       <div>
         <label class="label"
           >URL<input class="input" class:input-error={$errors.url} bind:value={$form.url} /></label>
-        <ErrorText fieldName='URL' text={$errors.url} />
+        <ErrorText fieldName="URL" text={$errors.url} />
       </div>
       <div>
         <label class="label">
@@ -51,7 +51,7 @@
             class:input-error={$errors.description}
             bind:value={$form.description} />
         </label>
-        <ErrorText fieldName='description' text={$errors.description} />
+        <ErrorText fieldName="description" text={$errors.description} />
       </div>
       <div>
         <label class="label"
@@ -59,7 +59,7 @@
             class="textarea"
             class:input-error={$errors.notes}
             bind:value={$form.notes} /></label>
-        <ErrorText fieldName='notes' text={$errors.notes} />
+        <ErrorText fieldName="notes" text={$errors.notes} />
       </div>
       <div>
         <div class="label">Ingredients*</div>
@@ -87,7 +87,8 @@
                     <label for={`ingredientunit${i}`} hidden>Ingredient {i} Unit</label>
                     <select id={`ingredientunit${i}`} bind:value={$form.ingredients[i].unit}>
                       {#each ingredientUnits as unit}
-                        <option value={unit}>{unit[0].toUpperCase() + unit.slice(1)}</option>
+                        <option class="first-letter:capitalize" value={unit}
+                          >{unit[0].toUpperCase() + unit.slice(1)}</option>
                       {/each}
                     </select>
                   </div>
@@ -100,8 +101,8 @@
                     </button>
                   {/if}
                 </div>
-                <ErrorText fieldName='ingredient name' text={$errors.ingredients?.[i]?.name} />
-                <ErrorText fieldName='ingredient amount' text={$errors.ingredients?.[i]?.amount} />
+                <ErrorText fieldName="ingredient name" text={$errors.ingredients?.[i]?.name} />
+                <ErrorText fieldName="ingredient amount" text={$errors.ingredients?.[i]?.amount} />
               </div>
             </li>
           {/each}
@@ -125,12 +126,12 @@
             class:input-error={$errors.instructions}
             bind:value={$form.instructions}
             rows="10" /></label>
-        <ErrorText fieldName='instructions' text={$errors.instructions} />
+        <ErrorText fieldName="instructions" text={$errors.instructions} />
       </div>
     </div>
   </div>
   <div>
-    <button class="btn variant-filled">{type[0].toUpperCase() + type.slice(1)}</button>
+    <button class="btn variant-filled first-letter:capitalize">{type}</button>
     <button class="btn variant-outline" type="button" on:click={() => history.back()}>Back </button>
   </div>
 </form>
