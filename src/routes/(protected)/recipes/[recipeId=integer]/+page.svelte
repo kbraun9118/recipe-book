@@ -2,6 +2,8 @@
   import { page } from '$app/stores';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import type { PageData } from './$types';
+  import { string } from 'zod';
+  import { stringify } from 'postcss';
 
   export let data: PageData;
 
@@ -9,7 +11,12 @@
     return instructions
       .split('*')
       .splice(1)
-      .map((line, i) => `<li><span class="badge-icon p-2 variant-soft-primary">${i + 1}</span><span>${line}</span></li>`)
+      .map(
+        (line, i) =>
+          `<li><span class="badge-icon p-2 variant-soft-primary">${
+            i + 1
+          }</span><span>${line}</span></li>`
+      )
       .join('');
   }
 
@@ -52,11 +59,13 @@
       : ingredient.ingredient.unit;
   }
 
-  const popupHover: PopupSettings = {
-    event: 'hover',
-    target: 'popupHover',
-    placement: 'top',
-  };
+  function popupHover(ingredientId: number): PopupSettings {
+    return {
+      event: 'hover',
+      target: 'popupHover' + ingredientId,
+      placement: 'top',
+    };
+  }
 </script>
 
 <div class="text-left space-y-2">
@@ -79,11 +88,11 @@
           {#if ingredient.ingredient.conversions.length > 0}
             <span
               class="font-bold border-b-2 border-dotted [&>*]:pointer-events-none"
-              use:popup={popupHover}>{ingredient.ingredient.name}</span>
-            <div class="card p-4 variant-glass-secondary" data-popup="popupHover">
+              use:popup={popupHover(ingredient.ingredient.id)}>{ingredient.ingredient.name}</span>
+            <div class="card p-4 variant-glass-secondary" data-popup={`popupHover${ingredient.ingredient.id}`}>
               {#each ingredient.ingredient.conversions as conversion (conversion.to + conversion.ingredientId)}
                 <p>
-                  {ingredient.amount * conversion.scale} {JSON.stringify(conversion)}
+                  {ingredient.amount * conversion.scale}
                   {conversion.to}
                 </p>
               {/each}
