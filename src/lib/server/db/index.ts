@@ -16,7 +16,7 @@ const isProd = env.NODE_ENV === 'production';
 
 const db =
   globalForDrizzle.db ??
-  drizzle(postgres(env.DATABASE_URL || DATABASE_URL), { schema, });
+  drizzle(postgres(env.DATABASE_URL || DATABASE_URL), { schema, logger: !isProd });
 
 if (building) {
   postgres(env.DATABASE_URL || DATABASE_URL, { max: 1 });
