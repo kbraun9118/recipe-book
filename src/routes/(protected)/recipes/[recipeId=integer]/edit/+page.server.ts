@@ -103,6 +103,6 @@ export const actions = {
       ) || []),
     ]);
 
-    throw redirect(304, `/recipes/${params.recipeId}`)
+    throw redirect(304, `/recipes/${params.recipeId}`);
   },
 } satisfies Actions;

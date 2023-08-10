@@ -4,10 +4,9 @@
   import '@skeletonlabs/skeleton/styles/skeleton.css';
   import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
   import '../app.postcss';
-    import { page } from '$app/stores';
+  import { page } from '$app/stores';
 
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-
 </script>
 
 <svelte:head>

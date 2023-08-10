@@ -3,12 +3,12 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
   return {
-    recipes: await db.query.recipes.findMany()
+    recipes: await db.query.recipes.findMany(),
   };
 }) satisfies PageServerLoad;
 
 export const actions = {
-  logout: async ({cookies}) => {
-    cookies.delete('authorized')
-  }
+  logout: async ({ cookies }) => {
+    cookies.delete('authorized');
+  },
 } satisfies Actions;

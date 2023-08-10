@@ -35,8 +35,8 @@ export const actions = {
       return { form };
     } catch (err) {
       form.errors = {
-        ingredientId: ['Number already has conversion to this unit']
-      }
+        ingredientId: ['Number already has conversion to this unit'],
+      };
 
       return fail(400, { form });
     }
@@ -62,8 +62,8 @@ export const actions = {
       return { form };
     } catch (err) {
       form.errors = {
-        ingredientId: ['Number already has conversion to this unit']
-      }
+        ingredientId: ['Number already has conversion to this unit'],
+      };
 
       return fail(400, { form });
     }

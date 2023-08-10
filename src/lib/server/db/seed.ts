@@ -1,6 +1,6 @@
 import type { DbClient } from '$lib/server/db/index';
 import { conversions, ingredients, recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
-import { eq, or, sql } from 'drizzle-orm';
+import { sql } from 'drizzle-orm';
 
 export async function seedDB(db: DbClient) {
   const [{ count }] = await db.select({ count: sql`count(*)` }).from(recipes);

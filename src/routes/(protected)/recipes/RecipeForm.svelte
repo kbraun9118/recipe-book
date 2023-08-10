@@ -74,7 +74,10 @@
                     <label hidden for={`ingredientname${i}`}>
                       Ingredient {i} Name
                     </label>
-                    <input class="capitalize" id={`ingredientname${i}`} bind:value={$form.ingredients[i].name} />
+                    <input
+                      class="capitalize"
+                      id={`ingredientname${i}`}
+                      bind:value={$form.ingredients[i].name} />
                     <label hidden for={`ingredientamount${i}`}>
                       Ingredient {i} Amount
                     </label>
@@ -84,7 +87,9 @@
                       step="any"
                       bind:value={$form.ingredients[i].amount} />
                     <label for={`ingredientunit${i}`} hidden>Ingredient {i} Unit</label>
-                    <IngredientUnitSelect id={`ingredientunit${i}`} bind:value={$form.ingredients[i].unit} />
+                    <IngredientUnitSelect
+                      id={`ingredientunit${i}`}
+                      bind:value={$form.ingredients[i].unit} />
                   </div>
                   {#if $form.ingredients.length > 1}
                     <button

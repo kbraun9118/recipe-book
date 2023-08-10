@@ -11,9 +11,7 @@
       "password": "postgres"
     }
   ],
-  "prettier.documentSelectors": [
-    "**/*.svelte"
-  ],
+  "prettier.documentSelectors": ["**/*.svelte"],
   "tailwindCSS.classAttributes": [
     "class",
     "accent",

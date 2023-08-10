@@ -71,7 +71,9 @@ export const recipeIngredientsRelations = relations(recipeIngredients, ({ one })
 export const conversions = pgTable(
   'conversions',
   {
-    ingredientId: serial('ingredient_id').notNull().references(() => ingredients.id),
+    ingredientId: serial('ingredient_id')
+      .notNull()
+      .references(() => ingredients.id),
     scale: real('scale').notNull(),
     to: unitEnum('unit').notNull(),
   },
@@ -80,7 +82,7 @@ export const conversions = pgTable(
   })
 );
 
-export type Conversion = InferModel<typeof conversions>
+export type Conversion = InferModel<typeof conversions>;
 
 export const conversionsRelations = relations(conversions, ({ one }) => ({
   ingredient: one(ingredients, {

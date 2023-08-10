@@ -13,6 +13,6 @@ export const load = (async ({ params }) => {
   }
   return {
     recipe,
-    title: recipe.name
+    title: recipe.name,
   };
 }) satisfies LayoutServerLoad;

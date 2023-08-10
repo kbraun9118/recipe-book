@@ -1,14 +1,17 @@
+import { building } from '$app/environment';
 import { env } from '$env/dynamic/private';
 import db, { dbClient } from '$lib/server/db';
 import { seedDB } from '$lib/server/db/seed';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
-await dbClient.connect();
+if (!building) {
+  await dbClient.connect();
 
-await migrate(db, { migrationsFolder: 'migrations' });
+  await migrate(db, { migrationsFolder: 'migrations' });
 
-if (env.NODE_ENV !== 'production') {
-  await seedDB(db);
+  if (env.NODE_ENV !== 'production') {
+    await seedDB(db);
+  }
 }
 
 if (!env.PAGE_LOGIN) {

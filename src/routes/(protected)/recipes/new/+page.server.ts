@@ -22,7 +22,7 @@ export const actions = {
   async default({ request }) {
     const form = await superValidate(request, newRecipeSchema);
 
-    console.log(form.data)
+    console.log(form.data);
 
     if (!form.valid) {
       return fail(400, { form });

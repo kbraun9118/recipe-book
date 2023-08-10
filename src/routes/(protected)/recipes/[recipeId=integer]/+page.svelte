@@ -2,8 +2,6 @@
   import { page } from '$app/stores';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import type { PageData } from './$types';
-  import { string } from 'zod';
-  import { stringify } from 'postcss';
 
   export let data: PageData;
 
@@ -42,8 +40,10 @@
         break;
       case 0.3:
         fraction = '1/3';
+        break;
       case 0.6:
         fraction = '2/3';
+        break;
     }
 
     return whole === 0 ? fraction : `${whole} ${fraction}`;
@@ -111,6 +111,7 @@
     <div class="lg:basis-1/2 lg:overflow-y-auto lg:max-h-[75vh]">
       <h2 class="h2">Instructions</h2>
       <ol class="list space-y-2">
+        <!-- eslint-disable-next-line -->
         {@html formatInstructions(data.recipe.instructions)}
       </ol>
     </div>

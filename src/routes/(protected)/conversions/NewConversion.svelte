@@ -25,7 +25,7 @@
     },
   });
 
-  let recipeName: string = '';
+  let recipeName = '';
   let recipeOptions: AutocompleteOption[] = ingredients.map((i) => {
     const value = `${i.name[0].toUpperCase() + i.name.slice(1)} (${
       i.unit[0].toUpperCase() + i.unit.slice(1)

@@ -1,6 +1,6 @@
-import { and, eq } from "drizzle-orm";
-import { ingredients, recipeIngredients } from "./db/schema/recipe";
-import db from "./db";
+import { and, eq } from 'drizzle-orm';
+import { ingredients, recipeIngredients } from './db/schema/recipe';
+import db from './db';
 
 export async function addIngredient(
   recipeId: number,
