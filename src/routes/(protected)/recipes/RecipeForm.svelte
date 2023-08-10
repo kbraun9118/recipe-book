@@ -5,6 +5,7 @@
   import type { SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
   import ErrorText from './ErrorText.svelte';
+    import IngredientUnitSelect from '$lib/components/IngredientUnitSelect.svelte';
 
   export let data: SuperValidated<NewRecipeSchema>;
   export let type: 'create' | 'update';
@@ -85,12 +86,7 @@
                       step="any"
                       bind:value={$form.ingredients[i].amount} />
                     <label for={`ingredientunit${i}`} hidden>Ingredient {i} Unit</label>
-                    <select id={`ingredientunit${i}`} bind:value={$form.ingredients[i].unit}>
-                      {#each ingredientUnits as unit}
-                        <option class="first-letter:capitalize" value={unit}
-                          >{unit[0].toUpperCase() + unit.slice(1)}</option>
-                      {/each}
-                    </select>
+                    <IngredientUnitSelect id={`ingredientunit${i}`} bind:value={$form.ingredients[i].unit} />
                   </div>
                   {#if $form.ingredients.length > 1}
                     <button

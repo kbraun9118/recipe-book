@@ -70,7 +70,10 @@ export async function seedDB(db: DbClient) {
         id: ingredients.id,
       });
 
-    await db.insert(conversions).values({ ingredientId: flour, scale: 120, to: 'grams' });
+    await db.insert(conversions).values([
+      { ingredientId: flour, scale: 120, to: 'grams' },
+      { ingredientId: whiteSugar, scale: 200, to: 'grams' },
+    ]);
 
     await db.insert(recipeIngredients).values([
       { recipeId: chocolateChipCookies, ingredientId: saltedButter, amount: 8 },

@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, type InferModel } from 'drizzle-orm';
 import { pgEnum, pgTable, primaryKey, real, serial, text, unique } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import ingredientUnits from '../../../ingredient-units';
@@ -79,6 +79,8 @@ export const conversions = pgTable(
     primaryKey: primaryKey(t.ingredientId, t.to),
   })
 );
+
+export type Conversion = InferModel<typeof conversions>
 
 export const conversionsRelations = relations(conversions, ({ one }) => ({
   ingredient: one(ingredients, {

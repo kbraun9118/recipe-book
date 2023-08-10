@@ -1,18 +1,10 @@
+import { updateConversionSchema } from '$lib/schemas';
 import db from '$lib/server/db';
-import { superValidate } from 'sveltekit-superforms/server';
-import type { PageServerLoad } from './$types';
 import { conversions, insertConversionsSchema } from '$lib/server/db/schema/recipe';
-import { z } from 'zod';
-import ingredientUnits from '../../../lib/ingredient-units';
 import { fail, type Actions } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
-
-const updateConversionSchema = z.object({
-  updateIngredientId: z.number(),
-  updateScale: z.number().gt(0),
-  updateTo: z.enum(ingredientUnits),
-  previousTo: z.enum(ingredientUnits),
-});
+import { superValidate } from 'sveltekit-superforms/server';
+import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
   return {
@@ -36,8 +28,8 @@ export const actions = {
     await db.insert(conversions).values({
       scale: form.data.scale,
       to: form.data.to,
-      ingredientId: form.data.ingredientId
-    })
+      ingredientId: form.data.ingredientId,
+    });
 
     return { form };
   },
@@ -50,10 +42,10 @@ export const actions = {
 
     await db
       .update(conversions)
-      .set({ scale: form.data.updateScale, to: form.data.updateTo })
+      .set({ scale: form.data.scale, to: form.data.to })
       .where(
         and(
-          eq(conversions.ingredientId, form.data.updateIngredientId),
+          eq(conversions.ingredientId, form.data.ingredientId),
           eq(conversions.to, form.data.previousTo)
         )
       );
@@ -61,14 +53,14 @@ export const actions = {
     return { form };
   },
   delete: async ({ request }) => {
-    const { deleteIngredientId, deleteTo } = Object.fromEntries(await request.formData());
+    const { ingredientId, to } = Object.fromEntries(await request.formData());
 
     await db
       .delete(conversions)
       .where(
         and(
-          eq(conversions.ingredientId, +deleteIngredientId),
-          eq(conversions.to, deleteTo.toString())
+          eq(conversions.ingredientId, +ingredientId),
+          eq(conversions.to, to.toString())
         )
       );
   },
