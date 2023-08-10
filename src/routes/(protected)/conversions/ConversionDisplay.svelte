@@ -12,7 +12,7 @@
 <form class="flex justify-between gap-2" method="post" use:enhance>
   <input class="hidden" name="ingredientId" bind:value={conversion.ingredientId} />
   <input class="hidden" name="to" bind:value={conversion.to} />
-  <span class="first-letter:capitalize basis-1/2 py-2">{conversion.to} at {conversion.scale}</span>
+  <span class="first-letter:capitalize basis-1/2 py-2">{conversion.to} scaled by {conversion.scale}</span>
   <div class="space-x-1">
     {#if !edit}
       <button

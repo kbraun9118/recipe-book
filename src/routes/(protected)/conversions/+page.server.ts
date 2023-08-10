@@ -25,13 +25,21 @@ export const actions = {
       return fail(400, { form });
     }
 
-    await db.insert(conversions).values({
-      scale: form.data.scale,
-      to: form.data.to,
-      ingredientId: form.data.ingredientId,
-    });
+    try {
+      await db.insert(conversions).values({
+        scale: form.data.scale,
+        to: form.data.to,
+        ingredientId: form.data.ingredientId,
+      });
 
-    return { form };
+      return { form };
+    } catch (err) {
+      form.errors = {
+        ingredientId: ['Number already has conversion to this unit']
+      }
+
+      return fail(400, { form });
+    }
   },
   update: async ({ request }) => {
     const form = await superValidate(request, updateConversionSchema);
@@ -40,28 +48,31 @@ export const actions = {
       return fail(400, { form });
     }
 
-    await db
-      .update(conversions)
-      .set({ scale: form.data.scale, to: form.data.to })
-      .where(
-        and(
-          eq(conversions.ingredientId, form.data.ingredientId),
-          eq(conversions.to, form.data.previousTo)
-        )
-      );
+    try {
+      await db
+        .update(conversions)
+        .set({ scale: form.data.scale, to: form.data.to })
+        .where(
+          and(
+            eq(conversions.ingredientId, form.data.ingredientId),
+            eq(conversions.to, form.data.previousTo)
+          )
+        );
 
-    return { form };
+      return { form };
+    } catch (err) {
+      form.errors = {
+        ingredientId: ['Number already has conversion to this unit']
+      }
+
+      return fail(400, { form });
+    }
   },
   delete: async ({ request }) => {
     const { ingredientId, to } = Object.fromEntries(await request.formData());
 
     await db
       .delete(conversions)
-      .where(
-        and(
-          eq(conversions.ingredientId, +ingredientId),
-          eq(conversions.to, to.toString())
-        )
-      );
+      .where(and(eq(conversions.ingredientId, +ingredientId), eq(conversions.to, to.toString())));
   },
 } satisfies Actions;

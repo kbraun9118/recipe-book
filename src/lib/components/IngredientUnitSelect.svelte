@@ -9,8 +9,8 @@
   export { clazz as class };
 </script>
 
-<select {id} class={clazz} {name} bind:value>
+<select {id} class={`capitalize input ${clazz}`} {name} bind:value>
   {#each ingredientUnits as unit (unit)}
-    <option value={unit}>{unit[0].toUpperCase() + unit.slice(1)}</option>
+    <option class="capitalize" value={unit}>{unit}</option>
   {/each}
 </select>

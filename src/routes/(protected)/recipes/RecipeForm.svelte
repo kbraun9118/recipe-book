@@ -1,11 +1,9 @@
 <script lang="ts">
-  import ingredientUnits from '$lib/ingredient-units';
+  import ErrorText from '$lib/components/ErrorText.svelte';
+  import IngredientUnitSelect from '$lib/components/IngredientUnitSelect.svelte';
   import type { NewRecipeSchema } from '$lib/schemas';
-  import { error, text } from '@sveltejs/kit';
   import type { SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
-  import ErrorText from './ErrorText.svelte';
-    import IngredientUnitSelect from '$lib/components/IngredientUnitSelect.svelte';
 
   export let data: SuperValidated<NewRecipeSchema>;
   export let type: 'create' | 'update';
@@ -76,7 +74,7 @@
                     <label hidden for={`ingredientname${i}`}>
                       Ingredient {i} Name
                     </label>
-                    <input id={`ingredientname${i}`} bind:value={$form.ingredients[i].name} />
+                    <input class="capitalize" id={`ingredientname${i}`} bind:value={$form.ingredients[i].name} />
                     <label hidden for={`ingredientamount${i}`}>
                       Ingredient {i} Amount
                     </label>
@@ -127,7 +125,7 @@
     </div>
   </div>
   <div>
-    <button class="btn variant-filled first-letter:capitalize">{type}</button>
-    <button class="btn variant-outline" type="button" on:click={() => history.back()}>Back </button>
+    <button class="btn variant-filled capitalize">{type}</button>
+    <button class="btn variant-outline" type="button" on:click={() => history.back()}>Back</button>
   </div>
 </form>

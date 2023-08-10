@@ -63,7 +63,7 @@
     return {
       event: 'hover',
       target: 'popupHover' + ingredientId,
-      placement: 'top',
+      placement: 'right',
     };
   }
 </script>
@@ -78,38 +78,42 @@
       <p>{data.recipe.notes}</p>
     {/if}
   </div>
-  <div>
-    <h2 class="h2">Ingredients</h2>
-    <ul>
-      {#each data.recipe.recipeIngredients as ingredient (ingredient.ingredientId)}
-        <li>
-          <span>{formatAmount(ingredient.amount)}</span>
-          <span>{formatUnit(ingredient)}</span>
-          {#if ingredient.ingredient.conversions.length > 0}
-            <span
-              class="font-bold border-b-2 border-dotted [&>*]:pointer-events-none"
-              use:popup={popupHover(ingredient.ingredient.id)}>{ingredient.ingredient.name}</span>
-            <div class="card p-4 variant-glass-secondary" data-popup={`popupHover${ingredient.ingredient.id}`}>
-              {#each ingredient.ingredient.conversions as conversion (conversion.to + conversion.ingredientId)}
-                <p>
-                  {ingredient.amount * conversion.scale}
-                  {conversion.to}
-                </p>
-              {/each}
-              <div class="arrow variant-glass-secondary" />
-            </div>
-          {:else}
-            <span class="font-bold">{ingredient.ingredient.name}</span>
-          {/if}
-        </li>
-      {/each}
-    </ul>
-  </div>
-  <div>
-    <h2 class="h2">Instructions</h2>
-    <ol class="list space-y-2">
-      {@html formatInstructions(data.recipe.instructions)}
-    </ol>
+  <div class="space-y-2 lg:flex lg:gap-2">
+    <div class="lg:basis-1/2 lg:overflow-y-auto lg:max-h-[75vh]">
+      <h2 class="h2">Ingredients</h2>
+      <ul>
+        {#each data.recipe.recipeIngredients as ingredient (ingredient.ingredientId)}
+          <li>
+            <span>{formatAmount(ingredient.amount)}</span>
+            <span>{formatUnit(ingredient)}</span>
+            {#if ingredient.ingredient.conversions.length > 0}
+              <span
+                class="font-bold border-b-2 border-dotted [&>*]:pointer-events-none"
+                use:popup={popupHover(ingredient.ingredient.id)}>{ingredient.ingredient.name}</span>
+              <div
+                class="card p-4 variant-glass-secondary"
+                data-popup={`popupHover${ingredient.ingredient.id}`}>
+                {#each ingredient.ingredient.conversions as conversion (conversion.to + conversion.ingredientId)}
+                  <p>
+                    {formatAmount(ingredient.amount * conversion.scale)}
+                    {conversion.to}
+                  </p>
+                {/each}
+                <div class="arrow variant-glass-secondary" />
+              </div>
+            {:else}
+              <span class="font-bold">{ingredient.ingredient.name}</span>
+            {/if}
+          </li>
+        {/each}
+      </ul>
+    </div>
+    <div class="lg:basis-1/2 lg:overflow-y-auto lg:max-h-[75vh]">
+      <h2 class="h2">Instructions</h2>
+      <ol class="list space-y-2">
+        {@html formatInstructions(data.recipe.instructions)}
+      </ol>
+    </div>
   </div>
   <div>
     <a class="btn variant-filled-warning" href={`${$page.url}/edit`}>Edit</a>

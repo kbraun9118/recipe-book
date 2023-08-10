@@ -44,7 +44,7 @@
   <h1 class="h1">Conversions</h1>
   <NewConversion data={data.createForm} ingredients={data.ingredients} />
   <div>
-    <ul class="space-y-2 lg:w-fit">
+    <ul class="space-y-2 lg:max-w-md">
       {#each Object.keys(ingredientConversions) as key}
         {@const conversions = ingredientConversions[+key]}
         {@const ingredient = conversions[0].ingredient}

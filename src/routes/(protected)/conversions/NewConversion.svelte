@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
+  import ErrorText from '$lib/components/ErrorText.svelte';
   import IngredientUnitSelect from '$lib/components/IngredientUnitSelect.svelte';
-  import ingredientUnits from '$lib/ingredient-units';
   import type { insertConversionsSchema } from '$lib/server/db/schema/recipe';
-  import { popup, type AutocompleteOption, Autocomplete } from '@skeletonlabs/skeleton';
+  import { Autocomplete, popup, type AutocompleteOption } from '@skeletonlabs/skeleton';
   import type { SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
 
@@ -16,9 +15,13 @@
 
   let create = false;
 
-  const { form } = superForm(data, {
-    onUpdate() {
-      create = false;
+  const { form, errors, reset, enhance } = superForm(data, {
+    onUpdated(event) {
+      if (event.form.valid) {
+        recipeName = '';
+        reset({ data: { ingredientId: 0, scale: undefined, to: 'grams' } });
+        create = false;
+      }
     },
   });
 
@@ -89,9 +92,15 @@
           </label>
           <label>Scale<input class="input" name="scale" bind:value={$form.scale} /></label>
         </div>
+        <ErrorText fieldName="ingredient name" text={$errors.ingredientId} />
+        <ErrorText fieldName="scale" text={$errors.scale} />
         <button class="btn variant-filled-primary">Create</button>
-        <button class="btn variant-filled-error" type="button" on:click={() => (create = false)}
-          >Cancel</button>
+        <button
+          class="btn variant-filled-error"
+          type="button"
+          on:click={() => {
+            create = false;
+          }}>Cancel</button>
       </form>
     </div>
   {:else}

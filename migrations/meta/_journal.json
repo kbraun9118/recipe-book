@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1691693411352,
+      "tag": "0000_classy_the_phantom",
+      "breakpoints": true
+    }
+  ]
+}
