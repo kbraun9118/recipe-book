@@ -5,24 +5,23 @@ import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { schema } from './schema';
+import { seedDB } from './seed';
 
 export type DbClient = PostgresJsDatabase<typeof schema>;
 
-const globalForDrizzle = globalThis as unknown as {
-  db: DbClient | undefined;
-};
-
 const isProd = env.NODE_ENV === 'production';
 
-const db =
-  globalForDrizzle.db ??
-  drizzle(postgres(env.DATABASE_URL || DATABASE_URL), { schema, logger: !isProd });
+const db = drizzle(postgres(env.DATABASE_URL || DATABASE_URL), { schema, logger: !isProd });
 
-if (building) {
-  postgres(env.DATABASE_URL || DATABASE_URL, { max: 1 });
-  await migrate(db, { migrationsFolder: 'migrations' });
+if (building || !isProd) {
+  const migrationDb = drizzle(postgres(env.DATABASE_URL || DATABASE_URL, { max: 1 }));
+  console.log('migrating');
+  await migrate(migrationDb, { migrationsFolder: 'migrations' });
+
+  if (!isProd) {
+    console.log('seeding');
+    seedDB(migrationDb);
+  }
 }
-
-if (!isProd) globalForDrizzle.db = db;
 
 export default db;

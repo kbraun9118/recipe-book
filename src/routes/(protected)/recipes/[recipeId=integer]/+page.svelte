@@ -82,7 +82,7 @@
     <div class="lg:basis-1/2 lg:overflow-y-auto lg:max-h-[75vh]">
       <h2 class="h2">Ingredients</h2>
       <ul>
-        {#each data.recipe.recipeIngredients as ingredient (ingredient.ingredientId)}
+        {#each data.recipe.recipesIngredients as ingredient (ingredient.ingredientId)}
           <li>
             <span>{formatAmount(ingredient.amount)}</span>
             <span>{formatUnit(ingredient)}</span>

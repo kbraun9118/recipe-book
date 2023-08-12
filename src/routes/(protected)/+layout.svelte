@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   import { enhance } from '$app/forms';
   import { AppBar, AppShell, popup } from '@skeletonlabs/skeleton';
   import { faBars } from '@fortawesome/free-solid-svg-icons';

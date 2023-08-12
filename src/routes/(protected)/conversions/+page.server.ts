@@ -3,7 +3,7 @@ import db from '$lib/server/db';
 import { conversions, insertConversionsSchema } from '$lib/server/db/schema/recipe';
 import { fail, type Actions } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
-import { superValidate } from 'sveltekit-superforms/server';
+import { setError, superValidate } from 'sveltekit-superforms/server';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
@@ -34,11 +34,7 @@ export const actions = {
 
       return { form };
     } catch (err) {
-      form.errors = {
-        ingredientId: ['Number already has conversion to this unit'],
-      };
-
-      return fail(400, { form });
+      return setError(form, 'ingredientId', 'Number already has conversion to this unit');
     }
   },
   update: async ({ request }) => {
@@ -61,11 +57,7 @@ export const actions = {
 
       return { form };
     } catch (err) {
-      form.errors = {
-        ingredientId: ['Number already has conversion to this unit'],
-      };
-
-      return fail(400, { form });
+      return setError(form, 'ingredientId', 'Number already has conversion to this unit');
     }
   },
   delete: async ({ request }) => {

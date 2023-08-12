@@ -4,7 +4,7 @@ import type { LayoutServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
   const recipe = await db.query.recipes.findFirst({
-    with: { recipeIngredients: { with: { ingredient: { with: { conversions: true } } } } },
+    with: { recipesIngredients: { with: { ingredient: { with: { conversions: true } } } } },
     where: (table, { eq }) => eq(table.id, +params.recipeId),
   });
 

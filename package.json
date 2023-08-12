@@ -32,6 +32,7 @@
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte": "^2.30.0",
+    "pg": "^8.11.2",
     "postcss": "^8.4.27",
     "postgres": "^3.3.5",
     "prettier": "^2.8.0",

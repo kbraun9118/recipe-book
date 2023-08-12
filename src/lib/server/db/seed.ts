@@ -1,8 +1,8 @@
-import type { DbClient } from '$lib/server/db/index';
-import { conversions, ingredients, recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
+import { conversions, ingredients, recipesIngredients, recipes } from '$lib/server/db/schema/recipe';
 import { sql } from 'drizzle-orm';
+import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 
-export async function seedDB(db: DbClient) {
+export async function seedDB(db: PostgresJsDatabase) {
   const [{ count }] = await db.select({ count: sql`count(*)` }).from(recipes);
   console.log(count);
   if (+(count as string) === 0) {
@@ -75,7 +75,7 @@ export async function seedDB(db: DbClient) {
       { ingredientId: whiteSugar, scale: 200, to: 'grams' },
     ]);
 
-    await db.insert(recipeIngredients).values([
+    await db.insert(recipesIngredients).values([
       { recipeId: chocolateChipCookies, ingredientId: saltedButter, amount: 8 },
       { recipeId: chocolateChipCookies, ingredientId: whiteSugar, amount: 0.5 },
       { recipeId: chocolateChipCookies, ingredientId: brownSugar, amount: 0.25 },

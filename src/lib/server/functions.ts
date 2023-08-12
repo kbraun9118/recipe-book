@@ -1,5 +1,5 @@
 import { and, eq } from 'drizzle-orm';
-import { ingredients, recipeIngredients } from './db/schema/recipe';
+import { ingredients, recipesIngredients } from './db/schema/recipe';
 import db from './db';
 
 export async function addIngredient(
@@ -24,6 +24,6 @@ export async function addIngredient(
   });
 
   await db
-    .insert(recipeIngredients)
+    .insert(recipesIngredients)
     .values({ ingredientId: ingredientId?.id, recipeId, amount: ingredient.amount });
 }
