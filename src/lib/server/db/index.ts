@@ -17,7 +17,7 @@ if (building || isNotProd) {
   const migrationDb = drizzle(postgres(env.DATABASE_URL || DATABASE_URL, { max: 1 }));
   await migrate(db, { migrationsFolder: 'migrations' });
 
-  if (isNotProd) {
+  if (!building) {
     await seedDB(migrationDb);
   }
 }
