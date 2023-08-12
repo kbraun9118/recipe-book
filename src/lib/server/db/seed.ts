@@ -1,8 +1,8 @@
-import type { DbClient } from '$lib/server/db/index';
 import { conversions, ingredients, recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
 import { sql } from 'drizzle-orm';
+import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 
-export async function seedDB(db: DbClient) {
+export async function seedDB(db: PostgresJsDatabase) {
   const [{ count }] = await db.select({ count: sql`count(*)` }).from(recipes);
   console.log(count);
   if (+(count as string) === 0) {
