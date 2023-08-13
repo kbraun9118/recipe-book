@@ -9,18 +9,16 @@ import { seedDB } from './seed';
 
 export type DbClient = PostgresJsDatabase<typeof schema>;
 
-const isProd = env.NODE_ENV === 'production';
+const isNotProd = env.ENVIRONMENT !== 'production';
 
-const db = drizzle(postgres(env.DATABASE_URL || DATABASE_URL), { schema, logger: !isProd });
+const db = drizzle(postgres(env.DATABASE_URL || DATABASE_URL), { schema, logger: isNotProd });
 
-if (building || !isProd) {
+if (building || isNotProd) {
   const migrationDb = drizzle(postgres(env.DATABASE_URL || DATABASE_URL, { max: 1 }));
-  console.log('migrating');
-  await migrate(migrationDb, { migrationsFolder: 'migrations' });
+  await migrate(db, { migrationsFolder: 'migrations' });
 
-  if (!isProd) {
-    console.log('seeding');
-    seedDB(migrationDb);
+  if (!building) {
+    await seedDB(migrationDb);
   }
 }
 

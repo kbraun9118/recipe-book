@@ -9,7 +9,7 @@ export const newRecipeSchema = insertRecipesSchema.extend({
         name: z.string().min(2),
         unit: z.enum([...unitEnum.enumValues]),
         amount: z.number().gt(0),
-      })
+      }),
     )
     .refine((items) => new Set(items.map((i) => i.name)).size === items.length, {
       message: 'Must be an array of unique strings',

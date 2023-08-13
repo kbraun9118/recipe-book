@@ -4,7 +4,7 @@ import db from './db';
 
 export async function addIngredient(
   recipeId: number,
-  ingredient: { name: string; amount: number; unit: string }
+  ingredient: { name: string; amount: number; unit: string },
 ) {
   const query = and(eq(ingredients.name, ingredient.name), eq(ingredients.unit, ingredient.unit));
 
