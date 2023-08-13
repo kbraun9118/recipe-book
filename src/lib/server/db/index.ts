@@ -9,7 +9,7 @@ import { seedDB } from './seed';
 
 export type DbClient = PostgresJsDatabase<typeof schema>;
 
-const isNotProd = env.NODE_ENV !== 'production';
+const isNotProd = env.ENVIRONMENT !== 'production';
 
 const db = drizzle(postgres(env.DATABASE_URL || DATABASE_URL), { schema, logger: isNotProd });
 
