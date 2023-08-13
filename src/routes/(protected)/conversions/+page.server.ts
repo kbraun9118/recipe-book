@@ -55,8 +55,8 @@ export const actions = {
         .where(
           and(
             eq(conversions.ingredientId, form.data.ingredientId),
-            eq(conversions.to, form.data.previousTo)
-          )
+            eq(conversions.to, form.data.previousTo),
+          ),
         );
 
       return { form };

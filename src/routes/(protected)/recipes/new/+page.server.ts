@@ -13,7 +13,7 @@ export const load = (async () => {
         ingredients: [{ name: '', unit: 'cups', amount: 0 }],
       },
       newRecipeSchema,
-      { errors: false }
+      { errors: false },
     ),
   };
 }) satisfies PageServerLoad;

@@ -24,7 +24,7 @@ export const load = (async ({ parent }) => {
           unit: ri.ingredient.unit,
         })),
       },
-      newRecipeSchema
+      newRecipeSchema,
     ),
   };
 }) satisfies PageServerLoad;
@@ -63,15 +63,18 @@ export const actions = {
         recipeIngredient: ri,
         ingredient: data.ingredients.find(
           (i) =>
-            i.name === ri.ingredient.name && i.unit === ri.ingredient.unit && ri.amount !== i.amount
+            i.name === ri.ingredient.name &&
+            i.unit === ri.ingredient.unit &&
+            ri.amount !== i.amount,
         ),
       }))
       .filter(({ ingredient }) => !!ingredient);
 
-    const added = data.ingredients.filter((i) =>
-      recipe?.recipeIngredients
-        .map((ri) => ri.ingredient)
-        .every((ri) => i.name !== ri.name || i.unit !== ri.unit)
+    const added = data.ingredients.filter(
+      (i) =>
+        recipe?.recipeIngredients
+          .map((ri) => ri.ingredient)
+          .every((ri) => i.name !== ri.name || i.unit !== ri.unit),
     );
 
     const removed = recipe?.recipeIngredients
@@ -87,9 +90,9 @@ export const actions = {
           .where(
             and(
               eq(recipeIngredients.recipeId, +params.recipeId),
-              eq(recipeIngredients.ingredientId, recipeIngredient.ingredientId)
-            )
-          )
+              eq(recipeIngredients.ingredientId, recipeIngredient.ingredientId),
+            ),
+          ),
       ) || []),
       ...(removed?.map((ingredient) =>
         db
@@ -97,9 +100,9 @@ export const actions = {
           .where(
             and(
               eq(recipeIngredients.recipeId, +params.recipeId),
-              eq(recipeIngredients.ingredientId, ingredient.id)
-            )
-          )
+              eq(recipeIngredients.ingredientId, ingredient.id),
+            ),
+          ),
       ) || []),
     ]);
 

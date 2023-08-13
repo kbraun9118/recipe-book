@@ -36,7 +36,7 @@ export const ingredients = pgTable(
   },
   (t) => ({
     name_type_unique: unique('name_type_unique').on(t.name, t.unit),
-  })
+  }),
 );
 
 export const ingredientsRelations = relations(ingredients, ({ many }) => ({
@@ -57,7 +57,7 @@ export const recipeIngredients = pgTable(
   },
   (t) => ({
     primaryKey: primaryKey(t.recipeId, t.ingredientId),
-  })
+  }),
 );
 
 export const recipeIngredientsRelations = relations(recipeIngredients, ({ one }) => ({
@@ -79,7 +79,7 @@ export const conversions = pgTable(
   },
   (t) => ({
     primaryKey: primaryKey(t.ingredientId, t.to),
-  })
+  }),
 );
 
 export type Conversion = InferModel<typeof conversions>;
