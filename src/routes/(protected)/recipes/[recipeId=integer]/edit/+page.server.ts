@@ -1,7 +1,7 @@
 import { newRecipeSchema } from '$lib/schemas';
 import db from '$lib/server/db';
-import { recipesIngredients, recipes } from '$lib/server/db/schema/recipe';
-import { addIngredient } from '$lib/server/functions';
+import { recipesIngredients, recipes, tags, recipesTags } from '$lib/server/db/schema/recipe';
+import { addIngredient, addTagToRecipe } from '$lib/server/functions';
 import { fail, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms/server';
@@ -23,6 +23,7 @@ export const load = (async ({ parent }) => {
           amount: ri.amount,
           unit: ri.ingredient.unit,
         })),
+        tags: recipe.recipesTags.map((rt) => rt.tag.name) || [],
       },
       newRecipeSchema,
     ),
@@ -39,7 +40,10 @@ export const actions = {
 
     const recipe = await db.query.recipes.findFirst({
       where: (t, { eq }) => eq(t.id, +params.recipeId),
-      with: { recipesIngredients: { with: { ingredient: true } } },
+      with: {
+        recipesIngredients: { with: { ingredient: true } },
+        recipesTags: { with: { tag: true } },
+      },
     });
 
     const data = {
@@ -58,7 +62,7 @@ export const actions = {
       })
       .where(eq(recipes.id, +params.recipeId));
 
-    const updated = recipe?.recipesIngredients
+    const updatedIngredients = recipe?.recipesIngredients
       .map((ri) => ({
         recipesIngredient: ri,
         ingredient: data.ingredients.find(
@@ -70,19 +74,20 @@ export const actions = {
       }))
       .filter(({ ingredient }) => !!ingredient);
 
-    const added = data.ingredients.filter((i) =>
-      recipe?.recipesIngredients
-        .map((ri) => ri.ingredient)
-        .every((ri) => i.name !== ri.name || i.unit !== ri.unit)
+    const addedIngredients = data.ingredients.filter(
+      (i) =>
+        recipe?.recipesIngredients
+          .map((ri) => ri.ingredient)
+          .every((ri) => i.name !== ri.name || i.unit !== ri.unit),
     );
 
-    const removed = recipe?.recipesIngredients
+    const removedIngredients = recipe?.recipesIngredients
       .map((ri) => ri.ingredient)
       .filter((ri) => data.ingredients.every((i) => ri.name !== i.name || i.unit !== ri.unit));
 
     Promise.all([
-      ...added.map((ingredient) => addIngredient(recipe?.id || -1, ingredient)),
-      ...(updated?.map(({ ingredient, recipesIngredient }) =>
+      ...addedIngredients.map((ingredient) => addIngredient(recipe?.id || -1, ingredient)),
+      ...(updatedIngredients?.map(({ ingredient, recipesIngredient }) =>
         db
           .update(recipesIngredients)
           .set({ amount: ingredient?.amount })
@@ -93,7 +98,7 @@ export const actions = {
             ),
           ),
       ) || []),
-      ...(removed?.map((ingredient) =>
+      ...(removedIngredients?.map((ingredient) =>
         db
           .delete(recipesIngredients)
           .where(
@@ -104,6 +109,13 @@ export const actions = {
           ),
       ) || []),
     ]);
+
+    Promise.all(
+      recipe?.recipesTags.forEach(async () =>
+        db.delete(recipesTags).where(eq(recipesTags.recipeId, recipe.id)),
+      ) || [],
+    );
+    Promise.all(form.data.tags.map((t) => addTagToRecipe(+params.recipeId, t)));
 
     throw redirect(304, `/recipes/${params.recipeId}`);
   },

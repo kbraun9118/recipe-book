@@ -11,10 +11,10 @@ export type DbClient = PostgresJsDatabase<typeof schema>;
 
 const isNotProd = env.ENVIRONMENT !== 'production';
 
-const db = drizzle(postgres(env.DATABASE_URL || DATABASE_URL), { schema, logger: isNotProd });
+const db = drizzle(postgres(DATABASE_URL || env.DATABASE_URL), { schema, logger: isNotProd });
 
 if (building || isNotProd) {
-  const migrationDb = drizzle(postgres(env.DATABASE_URL || DATABASE_URL, { max: 1 }));
+  const migrationDb = drizzle(postgres(DATABASE_URL || env.DATABASE_URL, { max: 1 }));
   await migrate(db, { migrationsFolder: 'migrations' });
 
   if (!building) {

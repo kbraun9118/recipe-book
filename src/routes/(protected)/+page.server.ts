@@ -3,7 +3,7 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
   return {
-    recipes: await db.query.recipes.findMany(),
+    recipes: await db.query.recipes.findMany({ with: { recipesTags: { with: { tag: true } } } }),
   };
 }) satisfies PageServerLoad;
 

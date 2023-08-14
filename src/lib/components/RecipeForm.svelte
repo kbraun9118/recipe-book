@@ -5,6 +5,8 @@
   import { Autocomplete, InputChip, type AutocompleteOption, popup } from '@skeletonlabs/skeleton';
   import type { SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
+  import Error from '../../routes/+error.svelte';
+  import type { SvelteComponent } from 'svelte';
 
   export let data: SuperValidated<NewRecipeSchema>;
   export let type: 'create' | 'update';
@@ -28,10 +30,14 @@
   };
 
   let inputChip = '';
-  let inputChipList: string[] = [];
-  const inputChipAutocompleteOptions: AutocompleteOption[] = tags.map(t => ({label: t, value: t}))
+  let inputChipList: string[] = $form.tags;
+  const inputChipAutocompleteOptions: AutocompleteOption[] = tags.map((t) => ({
+    label: t,
+    value: t,
+  }));
   function onInputChipSelect(event: CustomEvent<AutocompleteOption>): void {
     inputChipList.push(event.detail.value as string);
+    inputChip = '';
     inputChipList = inputChipList;
   }
 </script>
@@ -73,19 +79,24 @@
       <div>
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">
-          Tags
-          <div use:popup={{
-            event: 'focus-click',
-            target: 'inputChipAutocomplete',
-            placement: 'bottom-start'
-          }}>
+          Tags*
+          <div
+            use:popup={{
+              event: 'focus-click',
+              target: 'inputChipAutocomplete',
+              placement: 'bottom-start',
+            }}>
             <InputChip
               bind:input={inputChip}
               bind:value={inputChipList}
               name="tags"
-              placeholder="" />
+              placeholder=""
+              class={$errors.tags ? 'input-error' : null} />
           </div>
-          <div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto" tabindex="-1" data-popup="inputChipAutocomplete" >
+          <div
+            class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto"
+            tabindex="-1"
+            data-popup="inputChipAutocomplete">
             <Autocomplete
               bind:input={inputChip}
               options={inputChipAutocompleteOptions}
@@ -93,6 +104,7 @@
               on:selection={onInputChipSelect} />
           </div>
         </label>
+        <ErrorText fieldName="tags" text={$errors.tags?._errors} />
       </div>
       <div>
         <div class="label">Ingredients*</div>
@@ -123,7 +135,8 @@
                     <label for={`ingredientunit${i}`} hidden>Ingredient {i} Unit</label>
                     <IngredientUnitSelect
                       id={`ingredientunit${i}`}
-                      bind:value={$form.ingredients[i].unit} />
+                      bind:value={$form.ingredients[i].unit}
+                      isInput={false} />
                   </div>
                   {#if $form.ingredients.length > 1}
                     <button
