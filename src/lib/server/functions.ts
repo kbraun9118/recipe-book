@@ -1,5 +1,5 @@
 import { and, eq } from 'drizzle-orm';
-import { ingredients, recipeIngredients } from './db/schema/recipe';
+import { ingredients, recipesIngredients, recipesTags, tags } from './db/schema/recipe';
 import db from './db';
 
 export async function addIngredient(
@@ -24,6 +24,17 @@ export async function addIngredient(
   });
 
   await db
-    .insert(recipeIngredients)
+    .insert(recipesIngredients)
     .values({ ingredientId: ingredientId?.id, recipeId, amount: ingredient.amount });
+}
+
+export async function addTagToRecipe(recipeId: number, tagName: string) {
+  let tag = await db.query.tags.findFirst({ where: eq(tags.name, tagName) });
+
+  if (!tag) {
+    const [newTag] = await db.insert(tags).values({ name: tagName }).returning();
+    tag = newTag;
+  }
+
+  await db.insert(recipesTags).values({ recipeId, tagId: tag.id });
 }

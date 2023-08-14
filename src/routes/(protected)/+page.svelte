@@ -1,7 +1,9 @@
 <script lang="ts">
+  import RecipeDisplay from '$lib/components/RecipeDisplay.svelte';
   import type { PageServerData } from './$types';
 
   export let data: PageServerData;
+
 </script>
 
 <div class="space-y-2">
@@ -9,10 +11,7 @@
   <ul class="space-y-2">
     {#each data.recipes as recipe (recipe.id)}
       <li>
-        <a class="block card card-hover variant-glass-primary p-4" href={`/recipes/${recipe.id}`}>
-          <h2 class="h3">{recipe.name}</h2>
-          <p>{recipe.description}</p>
-        </a>
+        <RecipeDisplay recipe={recipe} />
       </li>
     {/each}
   </ul>

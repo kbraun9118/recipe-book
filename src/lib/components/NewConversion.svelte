@@ -67,6 +67,7 @@
             <input
               autocomplete="off"
               class="input autocomplete"
+              class:input-error={$errors.ingredientId}
               type="search"
               name="autocomplete-search"
               bind:value={recipeName}
@@ -90,7 +91,7 @@
             Unit
             <IngredientUnitSelect name="to" bind:value={$form.to} />
           </label>
-          <label>Scale<input class="input" name="scale" bind:value={$form.scale} /></label>
+          <label>Scale<input class="input" class:input-error={$errors.scale} name="scale" bind:value={$form.scale} /></label>
         </div>
         <ErrorText fieldName="ingredient name" text={$errors.ingredientId} />
         <ErrorText fieldName="scale" text={$errors.scale} />

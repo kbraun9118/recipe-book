@@ -13,6 +13,8 @@ export const recipes = pgTable('recipes', {
   instructions: text('instructions').notNull(),
 });
 
+export type Recipe = InferModel<typeof recipes>;
+
 export const insertRecipesSchema = createInsertSchema(recipes, {
   name: (s) => s.name.min(2),
   url: (s) => s.url.url().optional().or(z.literal('')),
@@ -22,7 +24,8 @@ export const insertRecipesSchema = createInsertSchema(recipes, {
 });
 
 export const recipesRelations = relations(recipes, ({ many }) => ({
-  recipeIngredients: many(recipeIngredients),
+  recipesIngredients: many(recipesIngredients),
+  recipesTags: many(recipesTags),
 }));
 
 export const unitEnum = pgEnum('units', ingredientUnits);
@@ -39,13 +42,48 @@ export const ingredients = pgTable(
   }),
 );
 
+export type Ingredient = InferModel<typeof ingredients>;
+
 export const ingredientsRelations = relations(ingredients, ({ many }) => ({
-  recipeIngredients: many(recipeIngredients),
+  recipesIngredients: many(recipesIngredients),
   conversions: many(conversions),
 }));
 
-export const recipeIngredients = pgTable(
-  'recipe_ingredients',
+export const tags = pgTable('tags', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull().unique(),
+});
+
+export type Tag = InferModel<typeof tags>;
+
+export const tagsRelations = relations(tags, ({ many }) => ({
+  recipesTags: many(recipesTags),
+}));
+
+export const recipesTags = pgTable(
+  'recipes_tags',
+  {
+    tagId: serial('tagId')
+      .notNull()
+      .references(() => tags.id),
+    recipeId: serial('recipeId')
+      .notNull()
+      .references(() => recipes.id),
+  },
+  (t) => ({
+    primaryKey: primaryKey(t.recipeId, t.tagId),
+  }),
+);
+
+export type RecipeTag = InferModel<typeof recipesTags>;
+
+export const recipesTagsRelations = relations(recipesTags, ({ one }) => ({
+  tag: one(tags, { references: [tags.id], fields: [recipesTags.tagId] }),
+  recipe: one(recipes, { references: [recipes.id], fields: [recipesTags.recipeId] }),
+}));
+
+export const recipesIngredients = pgTable(
+  'recipes_ingredients',
   {
     recipeId: serial('recipe_id')
       .notNull()
@@ -60,11 +98,17 @@ export const recipeIngredients = pgTable(
   }),
 );
 
-export const recipeIngredientsRelations = relations(recipeIngredients, ({ one }) => ({
-  recipe: one(recipes, { references: [recipes.id], fields: [recipeIngredients.recipeId] }),
+export type RecipeIngredient = InferModel<typeof recipesIngredients>;
+
+export type RecipeWithTags = Recipe & {
+  recipesTags: (RecipeTag & { tag: Tag })[];
+};
+
+export const recipesIngredientsRelations = relations(recipesIngredients, ({ one }) => ({
+  recipe: one(recipes, { references: [recipes.id], fields: [recipesIngredients.recipeId] }),
   ingredient: one(ingredients, {
     references: [ingredients.id],
-    fields: [recipeIngredients.ingredientId],
+    fields: [recipesIngredients.ingredientId],
   }),
 }));
 

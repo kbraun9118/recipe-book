@@ -11,8 +11,7 @@
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write .",
     "generate": "drizzle-kit generate:pg",
-    "studio": "drizzle-kit studio --port 4000 --verbose",
-    "dev:fresh": "docker compose down && docker compose up -d && rm -rf migrations/ && yarn generate && yarn dev"
+    "studio": "drizzle-kit studio --port 4000 --verbose"
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.5.1",
@@ -32,6 +31,7 @@
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-svelte": "^2.30.0",
+    "pg": "^8.11.2",
     "postcss": "^8.4.27",
     "postgres": "^3.3.5",
     "prettier": "^3.0.0",

@@ -29,8 +29,16 @@
     <input class="hidden" name="ingredientId" bind:value={$form.ingredientId} />
     <input class="hidden" name="previousTo" bind:value={$form.previousTo} />
     <div class="input-group input-group-divider grid-cols-[1fr_1fr]">
-      <IngredientUnitSelect name="to" bind:value={$form.to} />
-      <input type="number" step="any" name="scale" bind:value={$form.scale} />
+      <IngredientUnitSelect
+        class={$errors.ingredientId ? 'input-error' : ''}
+        name="to"
+        bind:value={$form.to} />
+      <input
+        type="number"
+        step="any"
+        class:input-error={$errors.scale}
+        name="scale"
+        bind:value={$form.scale} />
     </div>
     <div class="flex space-x-1">
       <button class="btn variant-filled-warning">Update</button>

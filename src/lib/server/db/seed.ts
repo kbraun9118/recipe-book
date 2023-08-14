@@ -1,4 +1,11 @@
-import { conversions, ingredients, recipeIngredients, recipes } from '$lib/server/db/schema/recipe';
+import {
+  conversions,
+  ingredients,
+  recipesIngredients,
+  recipes,
+  tags,
+  recipesTags,
+} from '$lib/server/db/schema/recipe';
 import { sql } from 'drizzle-orm';
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 
@@ -36,6 +43,17 @@ export async function seedDB(db: PostgresJsDatabase) {
         },
       ])
       .returning({ id: recipes.id });
+
+    const [{ id: breakfast }, { id: dessert }, { id: chocolate }] = await db
+      .insert(tags)
+      .values([{ name: 'breakfast' }, { name: 'dessert' }, { name: 'chocolate' }])
+      .returning({ id: tags.id });
+
+    await db.insert(recipesTags).values([
+      { recipeId: pancakes, tagId: breakfast },
+      { recipeId: chocolateChipCookies, tagId: dessert },
+      { recipeId: chocolateChipCookies, tagId: chocolate },
+    ]);
 
     const [
       { id: saltedButter },
@@ -75,7 +93,7 @@ export async function seedDB(db: PostgresJsDatabase) {
       { ingredientId: whiteSugar, scale: 200, to: 'grams' },
     ]);
 
-    await db.insert(recipeIngredients).values([
+    await db.insert(recipesIngredients).values([
       { recipeId: chocolateChipCookies, ingredientId: saltedButter, amount: 8 },
       { recipeId: chocolateChipCookies, ingredientId: whiteSugar, amount: 0.5 },
       { recipeId: chocolateChipCookies, ingredientId: brownSugar, amount: 0.25 },

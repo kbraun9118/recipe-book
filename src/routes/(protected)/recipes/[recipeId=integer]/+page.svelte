@@ -70,6 +70,11 @@
 
 <div class="text-left space-y-2">
   <h1 class="h1">{data.recipe.name}</h1>
+  <div class="space-x-2">
+    {#each data.recipe.recipesTags as recipesTags (recipesTags.tagId)}
+      <a class="chip variant-filled-primary" href={`/recipes/tags?name=${recipesTags.tag.name}`}>{recipesTags.tag.name}</a>
+    {/each}
+  </div>
   <a class="anchor" href={data.recipe.url}>{data.recipe.url}</a>
   <div><p>{data.recipe.description}</p></div>
   <div>
@@ -82,7 +87,7 @@
     <div class="lg:basis-1/2 lg:overflow-y-auto lg:max-h-[75vh]">
       <h2 class="h2">Ingredients</h2>
       <ul>
-        {#each data.recipe.recipeIngredients as ingredient (ingredient.ingredientId)}
+        {#each data.recipe.recipesIngredients as ingredient (ingredient.ingredientId)}
           <li>
             <span>{formatAmount(ingredient.amount)}</span>
             <span>{formatUnit(ingredient)}</span>

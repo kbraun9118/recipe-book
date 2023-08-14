@@ -5,6 +5,6 @@
 
 {#if text}
   <p class="text-xs text-error-500 first-letter:capitalize">
-    {text?.map((s) => s.replace('Number', fieldName).replace('String', fieldName))}
+    {text?.map((s) => s.replace('Number', fieldName).replace('String', fieldName).replace('Array', fieldName))}
   </p>
 {/if}

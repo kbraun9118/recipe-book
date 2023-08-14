@@ -1,7 +1,7 @@
 import { newRecipeSchema } from '$lib/schemas';
 import db from '$lib/server/db';
 import { recipes } from '$lib/server/db/schema/recipe';
-import { addIngredient } from '$lib/server/functions';
+import { addIngredient, addTagToRecipe } from '$lib/server/functions';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
@@ -42,6 +42,7 @@ export const actions = {
       .returning({ recipeId: recipes.id });
 
     Promise.all(data.ingredients.map(async (ingredient) => addIngredient(recipeId, ingredient)));
+    Promise.all(data.tags.map(async (tag) => addTagToRecipe(recipeId, tag)));
 
     throw redirect(303, `/recipes/${recipeId}`);
   },
