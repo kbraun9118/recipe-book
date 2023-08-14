@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Conversion } from '$lib/server/db/schema/recipe';
   import type { PageData } from './$types';
-  import ConversionDisplay from '../../../lib/components/ConversionDisplay.svelte';
-  import EditConversion from './EditConversion.svelte';
-  import NewConversion from './NewConversion.svelte';
+  import ConversionDisplay from '$lib/components/ConversionDisplay.svelte';
+  import EditConversion from '$lib/components/EditConversion.svelte';
+  import NewConversion from '$lib/components/NewConversion.svelte';
 
   export let data: PageData;
 
