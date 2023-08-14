@@ -7,5 +7,5 @@
 
 <div>
   <h1 class="h1">Edit {data.recipe.name}</h1>
-  <RecipeForm data={data.form} type="update" />
+  <RecipeForm data={data.form} tags={data.tags} type="update" />
 </div>

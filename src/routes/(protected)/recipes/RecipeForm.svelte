@@ -2,11 +2,13 @@
   import ErrorText from '$lib/components/ErrorText.svelte';
   import IngredientUnitSelect from '$lib/components/IngredientUnitSelect.svelte';
   import type { NewRecipeSchema } from '$lib/schemas';
+  import { Autocomplete, InputChip, type AutocompleteOption, popup } from '@skeletonlabs/skeleton';
   import type { SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
 
   export let data: SuperValidated<NewRecipeSchema>;
   export let type: 'create' | 'update';
+  export let tags: string[];
 
   const { form, enhance, errors } = superForm(data, { dataType: 'json' });
 
@@ -24,6 +26,14 @@
       return f;
     });
   };
+
+  let inputChip = '';
+  let inputChipList: string[] = [];
+  const inputChipAutocompleteOptions: AutocompleteOption[] = tags.map(t => ({label: t, value: t}))
+  function onInputChipSelect(event: CustomEvent<AutocompleteOption>): void {
+    inputChipList.push(event.detail.value as string);
+    inputChipList = inputChipList;
+  }
 </script>
 
 <form class="space-y-2" method="post" use:enhance>
@@ -59,6 +69,30 @@
             class:input-error={$errors.notes}
             bind:value={$form.notes} /></label>
         <ErrorText fieldName="notes" text={$errors.notes} />
+      </div>
+      <div>
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="label">
+          Tags
+          <div use:popup={{
+            event: 'focus-click',
+            target: 'inputChipAutocomplete',
+            placement: 'bottom-start'
+          }}>
+            <InputChip
+              bind:input={inputChip}
+              bind:value={inputChipList}
+              name="tags"
+              placeholder="" />
+          </div>
+          <div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto" tabindex="-1" data-popup="inputChipAutocomplete" >
+            <Autocomplete
+              bind:input={inputChip}
+              options={inputChipAutocompleteOptions}
+              denylist={inputChipList}
+              on:selection={onInputChipSelect} />
+          </div>
+        </label>
       </div>
       <div>
         <div class="label">Ingredients*</div>

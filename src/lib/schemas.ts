@@ -14,6 +14,7 @@ export const newRecipeSchema = insertRecipesSchema.extend({
     .refine((items) => new Set(items.map((i) => i.name)).size === items.length, {
       message: 'Must be an array of unique strings',
     }),
+  tags: z.array(z.string().min(2)).min(1),
 });
 
 export const updateConversionSchema = z.object({
