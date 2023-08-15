@@ -2478,9 +2478,9 @@ svelte@^4.0.5:
     periscopic "^3.1.0"
 
 sveltekit-superforms@^1.5.0:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/sveltekit-superforms/-/sveltekit-superforms-1.5.1.tgz#c063c2bfc5bce078186863ea6559226188234ff0"
-  integrity sha512-OqKzxuL1P29CFiK1CD00JRsvEsRPedvrR0qXmB4uqzXAIjOS+DpLjoEaa6Cnkd4H00fRa2161GcZNeEBue/D3A==
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/sveltekit-superforms/-/sveltekit-superforms-1.5.2.tgz#5870b64a88db925102cdd2b38d7cede1355843e5"
+  integrity sha512-nwa1SDN5LXM+5NQeBgllOuw2uoSF0IJARpUZFdQzx5B6O+Gd/YhLRV0yX/RSjYNDoflH7+ompzgqVCIEfbpvew==
 
 tailwindcss@^3.3.3:
   version "3.3.3"
