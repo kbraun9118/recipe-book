@@ -967,9 +967,9 @@ drizzle-orm@^0.28.0:
   integrity sha512-7LwNEBJH5EFvkD0vm7RdKWDZsFP9CYR4AWN2fMwns/ezexoX3+UNoVOWGRPJf1qsj357SESldrNEueFvUDfZxA==
 
 drizzle-zod@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/drizzle-zod/-/drizzle-zod-0.5.0.tgz#e5b6a1e83051b47549f1a0c6e2fdb11c21b72360"
-  integrity sha512-gIOXclphhaleYFEGZFxSyJBoiPRyksGyIPgmgWz6a+j5JeaOrOf1QOPjf1p5AHYA+1O3Q01ondGOZfgObxBTsg==
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/drizzle-zod/-/drizzle-zod-0.5.1.tgz#4e5efe016dce22ed01063f72f839b07670b2d11e"
+  integrity sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==
 
 electron-to-chromium@^1.4.477:
   version "1.4.490"
