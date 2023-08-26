@@ -27,10 +27,8 @@
   };
 
   let inputChip = '';
-  let inputChipList: string[] = $form.tags;
 
-  $: $form.tags = inputChipList;
-  $: console.log($form.tags, inputChipList);
+  $: console.log($form.tags);
 
   const inputChipAutocompleteOptions: AutocompleteOption[] = tags.map((t) => ({
     label: t,
@@ -38,10 +36,8 @@
   }));
 
   function onInputChipSelect(event: CustomEvent<AutocompleteOption>): void {
-    inputChipList.push(event.detail.value as string);
+    $form.tags = [...$form.tags, event.detail.value as string];
     inputChip = '';
-    $form.tags = inputChipList;
-    inputChipList = inputChipList;
   }
 </script>
 
@@ -91,7 +87,7 @@
             }}>
             <InputChip
               bind:input={inputChip}
-              bind:value={inputChipList}
+              bind:value={$form.tags}
               name="tags"
               placeholder=""
               class={$errors.tags ? 'input-error' : null} />
@@ -103,7 +99,7 @@
             <Autocomplete
               bind:input={inputChip}
               options={inputChipAutocompleteOptions}
-              denylist={inputChipList}
+              denylist={$form.tags}
               on:selection={onInputChipSelect} />
           </div>
         </label>
