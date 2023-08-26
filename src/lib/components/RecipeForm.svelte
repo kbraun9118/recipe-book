@@ -76,34 +76,36 @@
         <ErrorText fieldName="notes" text={$errors.notes} />
       </div>
       <div>
-        <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="label">
-          Tags*
-          <div
-            use:popup={{
-              event: 'focus-click',
-              target: 'inputChipAutocomplete',
-              placement: 'bottom-start',
-            }}>
-            <InputChip
-              bind:input={inputChip}
-              bind:value={$form.tags}
-              name="tags"
-              placeholder=""
-              class={$errors.tags ? 'input-error' : null} />
-          </div>
-          <div
-            class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto"
-            tabindex="-1"
-            data-popup="inputChipAutocomplete">
-            <Autocomplete
-              bind:input={inputChip}
-              options={inputChipAutocompleteOptions}
-              denylist={$form.tags}
-              on:selection={onInputChipSelect} />
-          </div>
-        </label>
-        <ErrorText fieldName="tags" text={$errors.tags?._errors} />
+        {#key $form.tags}
+          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <label class="label">
+            Tags*
+            <div
+              use:popup={{
+                event: 'focus-click',
+                target: 'inputChipAutocomplete',
+                placement: 'bottom-start',
+              }}>
+              <InputChip
+                bind:input={inputChip}
+                bind:value={$form.tags}
+                name="tags"
+                placeholder=""
+                class={$errors.tags ? 'input-error' : null} />
+            </div>
+            <div
+              class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto"
+              tabindex="-1"
+              data-popup="inputChipAutocomplete">
+              <Autocomplete
+                bind:input={inputChip}
+                options={inputChipAutocompleteOptions}
+                denylist={$form.tags}
+                on:selection={onInputChipSelect} />
+            </div>
+          </label>
+          <ErrorText fieldName="tags" text={$errors.tags?._errors} />
+        {/key}
       </div>
       <div>
         <div class="label">Ingredients*</div>
