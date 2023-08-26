@@ -30,6 +30,7 @@
   let inputChipList: string[] = $form.tags;
 
   $: $form.tags = inputChipList;
+  $: console.log($form.tags, inputChipList);
 
   const inputChipAutocompleteOptions: AutocompleteOption[] = tags.map((t) => ({
     label: t,
