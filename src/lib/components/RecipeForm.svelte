@@ -2,11 +2,9 @@
   import ErrorText from '$lib/components/ErrorText.svelte';
   import IngredientUnitSelect from '$lib/components/IngredientUnitSelect.svelte';
   import type { NewRecipeSchema } from '$lib/schemas';
-  import { Autocomplete, InputChip, type AutocompleteOption, popup } from '@skeletonlabs/skeleton';
+  import { Autocomplete, InputChip, popup, type AutocompleteOption } from '@skeletonlabs/skeleton';
   import type { SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
-  import Error from '../../routes/+error.svelte';
-  import type { SvelteComponent } from 'svelte';
 
   export let data: SuperValidated<NewRecipeSchema>;
   export let type: 'create' | 'update';
@@ -16,7 +14,6 @@
 
   const addIngredient = () => {
     form.update((f) => {
-      console.log(f.ingredients);
       f.ingredients.push({ name: '', unit: 'cups', amount: 0 });
       return f;
     });
@@ -31,13 +28,18 @@
 
   let inputChip = '';
   let inputChipList: string[] = $form.tags;
+
+  $: $form.tags = inputChipList;
+
   const inputChipAutocompleteOptions: AutocompleteOption[] = tags.map((t) => ({
     label: t,
     value: t,
   }));
+
   function onInputChipSelect(event: CustomEvent<AutocompleteOption>): void {
     inputChipList.push(event.detail.value as string);
     inputChip = '';
+    $form.tags = inputChipList;
     inputChipList = inputChipList;
   }
 </script>

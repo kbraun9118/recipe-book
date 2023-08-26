@@ -49,8 +49,6 @@
         ingredientId: ingredients.find((i) => i.name === name && i.unit === unit)?.id,
       };
 
-      console.log(updated);
-
       return updated;
     });
   }

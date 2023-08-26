@@ -11,7 +11,6 @@ import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 
 export async function seedDB(db: PostgresJsDatabase) {
   const [{ count }] = await db.select({ count: sql`count(*)` }).from(recipes);
-  console.log(count);
   if (+(count as string) === 0) {
     const [{ id: chocolateChipCookies }, { id: pancakes }] = await db
       .insert(recipes)

@@ -19,8 +19,6 @@ export const actions = {
   create: async ({ request }) => {
     const form = await superValidate(request, insertConversionsSchema);
 
-    console.log(form.data);
-
     if (!form.valid) {
       return fail(400, { form });
     }
