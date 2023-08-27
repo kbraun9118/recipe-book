@@ -407,10 +407,10 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-"@skeletonlabs/skeleton@1.12.0":
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-1.12.0.tgz#6bfac569ba964917670d669ae5fdf41fc7cc0194"
-  integrity sha512-NCGy6WT3LUqu6EaFEG7J6lFQNB/DHlqFQpXMWkSpwdZIZ005OEVoZznNgdATYdTet++nS6LymBGVUQK00z82gw==
+"@skeletonlabs/skeleton@1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-1.11.0.tgz#52ad6bfd466261e5f92d9f7913e5a4b39f7daeb3"
+  integrity sha512-VdLdYT0Gm4zsVPjLM2cXjyBWJbo8Cxswf8RBsD5cjAP8E098D237WDgDQmV1JC6WYUY2OiEOLN4PV6S3LoF2dg==
   dependencies:
     esm-env "1.0.0"
 
