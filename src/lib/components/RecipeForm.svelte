@@ -98,11 +98,13 @@
             class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto"
             tabindex="-1"
             data-popup="inputChipAutocomplete">
-            <Autocomplete
-              bind:input={inputChip}
-              options={inputChipAutocompleteOptions}
-              denylist={$form.tags}
-              on:selection={onInputChipSelect} />
+            {#key $form.tags}
+              <Autocomplete
+                bind:input={inputChip}
+                options={inputChipAutocompleteOptions}
+                denylist={$form.tags}
+                on:selection={onInputChipSelect} />
+            {/key}
           </div>
         </label>
         <ErrorText fieldName="tags" text={$errors.tags?._errors} />
