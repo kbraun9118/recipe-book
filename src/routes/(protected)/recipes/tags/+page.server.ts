@@ -1,5 +1,4 @@
 import db from '$lib/server/db';
-import { recipes } from '$lib/server/db/schema/recipe';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ url }) => {
