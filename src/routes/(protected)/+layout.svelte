@@ -1,8 +1,14 @@
-<script>
+<script lang="ts">
   import { enhance } from '$app/forms';
-  import { AppBar, AppShell, popup } from '@skeletonlabs/skeleton';
   import { faBars } from '@fortawesome/free-solid-svg-icons';
+  import { AppBar, AppShell, popup } from '@skeletonlabs/skeleton';
   import Fa from 'svelte-fa';
+  import { cubicIn, cubicOut } from 'svelte/easing';
+  import { fade, fly } from 'svelte/transition';
+  import type { LayoutData } from './$types';
+  import PageTransition from '$lib/components/PageTransition.svelte';
+
+  export let data: LayoutData;
 </script>
 
 <AppShell>
@@ -37,7 +43,9 @@
   </svelte:fragment>
   <div class="flex justify-center px-5 lg:p-0">
     <div class="w-full lg:w-4/6 m-auto py-2">
-      <slot />
+      <PageTransition url={data.pathname}>
+        <slot />
+      </PageTransition>
     </div>
   </div>
 </AppShell>

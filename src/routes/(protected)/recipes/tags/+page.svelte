@@ -1,4 +1,5 @@
 <script lang="ts">
+  import PageTransition from '$lib/components/PageTransition.svelte';
   import RecipeDisplay from '$lib/components/RecipeDisplay.svelte';
   import type { PageData } from './$types';
 
@@ -15,15 +16,17 @@
     {/each}
   </div>
   {#if data.tag}
-    <div>
-      <h2 class="h2 capitalize py-2">{data.tag.name} Recipes</h2>
-      <ul class="space-y-2">
-        {#each data.tag.recipesTags as recipesTags (recipesTags.recipeId)}
-          <li>
-            <RecipeDisplay recipe={recipesTags.recipe} />
-          </li>
-        {/each}
-      </ul>
-    </div>
+    <PageTransition url={data.tag.name}>
+      <div>
+        <h2 class="h2 capitalize py-2">{data.tag.name} Recipes</h2>
+        <ul class="space-y-2">
+          {#each data.tag.recipesTags as recipesTags (recipesTags.recipeId)}
+            <li>
+              <RecipeDisplay recipe={recipesTags.recipe} />
+            </li>
+          {/each}
+        </ul>
+      </div>
+    </PageTransition>
   {/if}
 </div>
