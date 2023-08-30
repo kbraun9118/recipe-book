@@ -28,8 +28,6 @@
 
   let inputChip = '';
 
-  $: console.log($form.tags);
-
   const inputChipAutocompleteOptions: AutocompleteOption[] = tags.map((t) => ({
     label: t,
     value: t,

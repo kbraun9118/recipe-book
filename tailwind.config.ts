@@ -1,10 +1,10 @@
 import { join } from 'path';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
-import skeleton from '@skeletonlabs/skeleton/tailwind/skeleton.cjs';
+import { Config } from 'tailwindcss';
+import { skeleton } from '@skeletonlabs/tw-plugin';
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   darkMode: 'class',
   content: [
     './src/**/*.{html,js,svelte,ts}',
@@ -13,5 +13,15 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [forms, typography, ...skeleton()],
-};
+  plugins: [
+    forms,
+    typography,
+    skeleton({
+      themes: {
+        preset: [{ name: 'skeleton', enhancements: true }],
+      },
+    }),
+  ],
+} satisfies Config;
+
+export default config;

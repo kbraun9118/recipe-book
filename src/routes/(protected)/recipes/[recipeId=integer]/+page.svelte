@@ -11,9 +11,9 @@
       .splice(1)
       .map(
         (line, i) =>
-          `<li><span class="badge-icon p-2 variant-soft-primary">${
+          `<li><span class="badge-icon p-2 my-1 variant-soft-primary self-start">${
             i + 1
-          }</span><span>${line}</span></li>`
+          }</span><span>${line}</span></li>`,
       )
       .join('');
   }
@@ -72,7 +72,8 @@
   <h1 class="h1">{data.recipe.name}</h1>
   <div class="space-x-2">
     {#each data.recipe.recipesTags as recipesTags (recipesTags.tagId)}
-      <a class="chip variant-filled-primary" href={`/recipes/tags?name=${recipesTags.tag.name}`}>{recipesTags.tag.name}</a>
+      <a class="chip variant-filled-primary" href={`/recipes/tags?name=${recipesTags.tag.name}`}
+        >{recipesTags.tag.name}</a>
     {/each}
   </div>
   <a class="anchor" href={data.recipe.url}>{data.recipe.url}</a>
@@ -125,3 +126,7 @@
     <a class="btn variant-filled-warning" href={`${$page.url}/edit`}>Edit</a>
   </div>
 </div>
+
+<style>
+  
+</style>
