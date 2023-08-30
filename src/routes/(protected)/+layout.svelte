@@ -1,10 +1,8 @@
 <script>
-// @ts-nocheck
-
   import { enhance } from '$app/forms';
   import { AppBar, AppShell, popup } from '@skeletonlabs/skeleton';
   import { faBars } from '@fortawesome/free-solid-svg-icons';
-  import Fa from 'svelte-fa/src/fa.svelte';
+  import Fa from 'svelte-fa';
 </script>
 
 <AppShell>

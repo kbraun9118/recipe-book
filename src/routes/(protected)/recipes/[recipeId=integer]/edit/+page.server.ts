@@ -1,6 +1,6 @@
 import { newRecipeSchema } from '$lib/schemas';
 import db from '$lib/server/db';
-import { recipesIngredients, recipes, tags, recipesTags } from '$lib/server/db/schema/recipe';
+import { recipes, recipesIngredients, recipesTags } from '$lib/server/db/schema/recipe';
 import { addIngredient, addTagToRecipe } from '$lib/server/functions';
 import { fail, redirect } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
@@ -18,12 +18,12 @@ export const load = (async ({ parent }) => {
         description: recipe.description,
         notes: recipe.notes,
         instructions: recipe.instructions,
-        ingredients: recipe.recipesIngredients.map((ri) => ({
+        ingredients: recipe.recipesIngredients?.map((ri) => ({
           name: ri.ingredient.name,
           amount: ri.amount,
           unit: ri.ingredient.unit,
         })),
-        tags: recipe.recipesTags.map((rt) => rt.tag.name) || [],
+        tags: recipe.recipesTags?.map((rt) => rt.tag.name) || [],
       },
       newRecipeSchema,
     ),
@@ -48,7 +48,7 @@ export const actions = {
 
     const data = {
       ...form.data,
-      ingredients: form.data.ingredients.map((i) => ({ ...i, name: i.name.trim().toLowerCase() })),
+      ingredients: form.data.ingredients?.map((i) => ({ ...i, name: i.name.trim().toLowerCase() })),
     };
 
     await db
