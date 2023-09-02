@@ -1,9 +1,9 @@
 import { newRecipeSchema } from '$lib/schemas';
 import db from '$lib/server/db';
 import { recipes, recipesIngredients, recipesTags } from '$lib/server/db/schema/recipe';
-import { addIngredient, addTagToRecipe } from '$lib/server/functions';
+import { addIngredient, addTagsToRecipe } from '$lib/server/functions';
 import { fail, redirect } from '@sveltejs/kit';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -85,9 +85,12 @@ export const actions = {
       .map((ri) => ri.ingredient)
       .filter((ri) => data.ingredients.every((i) => ri.name !== i.name || i.unit !== ri.unit));
 
-    Promise.all([
-      ...addedIngredients.map((ingredient) => addIngredient(recipe?.id || -1, ingredient)),
-      ...(updatedIngredients?.map(({ ingredient, recipesIngredient }) =>
+    await Promise.all(
+      addedIngredients.map((ingredient) => addIngredient(recipe?.id || -1, ingredient)),
+    );
+
+    await Promise.all(
+      updatedIngredients?.map(({ ingredient, recipesIngredient }) =>
         db
           .update(recipesIngredients)
           .set({ amount: ingredient?.amount })
@@ -97,25 +100,25 @@ export const actions = {
               eq(recipesIngredients.ingredientId, recipesIngredient.ingredientId),
             ),
           ),
-      ) || []),
-      ...(removedIngredients?.map((ingredient) =>
-        db
-          .delete(recipesIngredients)
-          .where(
-            and(
-              eq(recipesIngredients.recipeId, +params.recipeId),
-              eq(recipesIngredients.ingredientId, ingredient.id),
-            ),
-          ),
-      ) || []),
-    ]);
-
-    Promise.all(
-      recipe?.recipesTags.forEach(async () =>
-        db.delete(recipesTags).where(eq(recipesTags.recipeId, recipe.id)),
       ) || [],
     );
-    Promise.all(form.data.tags.map((t) => addTagToRecipe(+params.recipeId, t)));
+
+    if (removedIngredients && removedIngredients.length > 0) {
+      await db.delete(recipesIngredients).where(
+        and(
+          eq(recipesIngredients.recipeId, +params.recipeId),
+          inArray(
+            recipesIngredients.ingredientId,
+            removedIngredients.map((ri) => ri.id),
+          ),
+        ),
+      );
+    }
+
+    if (recipe) {
+      await db.delete(recipesTags).where(eq(recipesTags.recipeId, recipe.id));
+    }
+    await addTagsToRecipe(+params.recipeId, form.data.tags);
 
     throw redirect(304, `/recipes/${params.recipeId}`);
   },

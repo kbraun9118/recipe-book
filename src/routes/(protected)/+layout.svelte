@@ -1,12 +1,10 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import PageTransition from '$lib/components/PageTransition.svelte';
   import { faBars } from '@fortawesome/free-solid-svg-icons';
   import { AppBar, AppShell, popup } from '@skeletonlabs/skeleton';
   import Fa from 'svelte-fa';
-  import { cubicIn, cubicOut } from 'svelte/easing';
-  import { fade, fly } from 'svelte/transition';
   import type { LayoutData } from './$types';
-  import PageTransition from '$lib/components/PageTransition.svelte';
 
   export let data: LayoutData;
 </script>

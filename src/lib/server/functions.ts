@@ -1,4 +1,4 @@
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { ingredients, recipesIngredients, recipesTags, tags } from './db/schema/recipe';
 import db from './db';
 
@@ -28,13 +28,21 @@ export async function addIngredient(
     .values({ ingredientId: ingredientId?.id, recipeId, amount: ingredient.amount });
 }
 
-export async function addTagToRecipe(recipeId: number, tagName: string) {
-  let tag = await db.query.tags.findFirst({ where: eq(tags.name, tagName) });
+export async function addTagsToRecipe(recipeId: number, tagNames: string[]) {
+  if (tagNames.length > 0) {
+    const dbTags = await db.query.tags.findMany({ where: inArray(tags.name, tagNames) });
 
-  if (!tag) {
-    const [newTag] = await db.insert(tags).values({ name: tagName }).returning();
-    tag = newTag;
+    const tagsToAdd = tagNames.filter((tag) => !dbTags.map((t) => t.name).includes(tag));
+
+    if (tagsToAdd.length > 0) {
+      const newTags = await db
+        .insert(tags)
+        .values(tagsToAdd.map((tag) => ({ name: tag })))
+        .returning();
+
+      dbTags.push(...newTags);
+    }
+
+    await db.insert(recipesTags).values(dbTags.map((tag) => ({ recipeId, tagId: tag.id })));
   }
-
-  await db.insert(recipesTags).values({ recipeId, tagId: tag.id });
 }

@@ -1,8 +1,8 @@
-import { relations, type InferModel } from 'drizzle-orm';
+import { relations, type InferSelectModel } from 'drizzle-orm';
 import { pgEnum, pgTable, primaryKey, real, serial, text, unique } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
-import ingredientUnits from '../../../ingredient-units';
 import { z } from 'zod';
+import ingredientUnits from '../../../ingredient-units';
 
 export const recipes = pgTable('recipes', {
   id: serial('id').primaryKey(),
@@ -13,7 +13,7 @@ export const recipes = pgTable('recipes', {
   instructions: text('instructions').notNull(),
 });
 
-export type Recipe = InferModel<typeof recipes>;
+export type Recipe = InferSelectModel<typeof recipes>;
 
 export const insertRecipesSchema = createInsertSchema(recipes, {
   name: (s) => s.name.min(2),
@@ -42,7 +42,7 @@ export const ingredients = pgTable(
   }),
 );
 
-export type Ingredient = InferModel<typeof ingredients>;
+export type Ingredient = InferSelectModel<typeof ingredients>;
 
 export const ingredientsRelations = relations(ingredients, ({ many }) => ({
   recipesIngredients: many(recipesIngredients),
@@ -54,7 +54,7 @@ export const tags = pgTable('tags', {
   name: text('name').notNull().unique(),
 });
 
-export type Tag = InferModel<typeof tags>;
+export type Tag = InferSelectModel<typeof tags>;
 
 export const tagsRelations = relations(tags, ({ many }) => ({
   recipesTags: many(recipesTags),
@@ -75,7 +75,7 @@ export const recipesTags = pgTable(
   }),
 );
 
-export type RecipeTag = InferModel<typeof recipesTags>;
+export type RecipeTag = InferSelectModel<typeof recipesTags>;
 
 export const recipesTagsRelations = relations(recipesTags, ({ one }) => ({
   tag: one(tags, { references: [tags.id], fields: [recipesTags.tagId] }),
@@ -98,7 +98,7 @@ export const recipesIngredients = pgTable(
   }),
 );
 
-export type RecipeIngredient = InferModel<typeof recipesIngredients>;
+export type RecipeIngredient = InferSelectModel<typeof recipesIngredients>;
 
 export type RecipeWithTags = Recipe & {
   recipesTags: (RecipeTag & { tag: Tag })[];
@@ -126,7 +126,7 @@ export const conversions = pgTable(
   }),
 );
 
-export type Conversion = InferModel<typeof conversions>;
+export type Conversion = InferSelectModel<typeof conversions>;
 
 export const conversionsRelations = relations(conversions, ({ one }) => ({
   ingredient: one(ingredients, {
