@@ -14,7 +14,7 @@
     "studio": "drizzle-kit studio --port 4000 --verbose"
   },
   "devDependencies": {
-    "@floating-ui/dom": "1.5.1",
+    "@floating-ui/dom": "1.5.2",
     "@fortawesome/free-solid-svg-icons": "6.4.2",
     "@skeletonlabs/skeleton": "2.0.0",
     "@skeletonlabs/tw-plugin": "0.1.0",
