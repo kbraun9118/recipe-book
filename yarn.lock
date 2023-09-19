@@ -2611,10 +2611,10 @@ svelte@4.2.0:
     magic-string "^0.30.0"
     periscopic "^3.1.0"
 
-sveltekit-superforms@1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/sveltekit-superforms/-/sveltekit-superforms-1.7.0.tgz#f32225cad4d06ec388c5a46065eea4cb8d73e7f1"
-  integrity sha512-mHfQp2sps2K55zsf3GdowgdokYDl5N4IOanHL/Ydi7F+YL5I9Ry2CrZoCIB4uPaX0/hUKW5DbAcHPLGq+sAAaQ==
+sveltekit-superforms@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/sveltekit-superforms/-/sveltekit-superforms-1.7.1.tgz#a21fe5062d9c49d6f545b2ddf9df32f5bba79a9b"
+  integrity sha512-0OcTr331TnCtFhYIqbqjOyqMKueDEw9EfsALzjc+A+0CZGjbDOygbEmvmxssRenM99bkmmMwwchG+uwgtRw4vA==
 
 symbol-tree@^3.2.4:
   version "3.2.4"
