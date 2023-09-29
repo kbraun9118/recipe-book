@@ -32,7 +32,7 @@
     "eslint": "8.50.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-svelte": "2.33.2",
-    "isomorphic-dompurify": "1.8.0",
+    "isomorphic-dompurify": "1.9.0",
     "pg": "8.11.3",
     "postcss": "8.4.31",
     "postgres": "3.3.5",
