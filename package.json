@@ -35,7 +35,7 @@
     "isomorphic-dompurify": "1.9.0",
     "pg": "8.11.3",
     "postcss": "8.4.31",
-    "postgres": "3.3.5",
+    "postgres": "3.4.0",
     "prettier": "3.0.3",
     "prettier-plugin-svelte": "3.0.3",
     "svelte": "4.2.1",
