@@ -2277,10 +2277,10 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-postgres@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/postgres/-/postgres-3.4.0.tgz#c1a6fa938e769290b9e3b5134323a39cf57b51f3"
-  integrity sha512-d7UtSoCg4hUtzxM9aRi3J8BrM6t0h4bQmgAHG96cDCNpP9CnnWQRdRl7WWNvKs0oOaQU2InGoOi1jETmdZK02g==
+postgres@3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/postgres/-/postgres-3.4.1.tgz#f1446241cd6d6ce158b5104e62b39eea02b2b9ad"
+  integrity sha512-Wasjv6WEzrZXbwKByR2RGD7MBfj7VBqco3hYWz8ifzSAp6tb2L6MlmcKFzkmgV1jT7/vKlcSa+lxXZeTdeVMzQ==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
