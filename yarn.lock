@@ -419,10 +419,10 @@
   dependencies:
     esm-env "1.0.0"
 
-"@skeletonlabs/tw-plugin@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@skeletonlabs/tw-plugin/-/tw-plugin-0.2.1.tgz#d6b39804bcf02b20e201d90b04d79451241aa204"
-  integrity sha512-F4Eq/0bxUOlhzgxU6zQJCMSe+cYJcN8HyjuG46mspNuOlSEc2CWgkjqgO/bHwkDBaQb66eQZsEFsfE11cd/PuA==
+"@skeletonlabs/tw-plugin@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@skeletonlabs/tw-plugin/-/tw-plugin-0.3.1.tgz#75ba4d100948c59b70ec5343f637d3aeb155f878"
+  integrity sha512-DjjeOHN3HhFQf6gYPT2MUZMkIdw1jeB9mbuKC8etQxUlOR4XitfC7hssRWFJ8RJsvrrN0myCBbdWkVG1JVA96g==
 
 "@sveltejs/adapter-auto@2.1.1":
   version "2.1.1"
