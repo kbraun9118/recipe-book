@@ -479,10 +479,10 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.10.0.tgz#4eedd01af3a82c1acb0fe6d837ebf339c4cbf839"
   integrity sha512-OZoJd+o5TaTSQeFFQ6WjFCiltiYVjIdsXxwu/XZ8qRpsvMQr4UsVrE5UyT9RIvsnuF47DqkJKhhVZ2Q9YW9IpQ==
 
-"@skeletonlabs/skeleton@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-2.2.0.tgz#700a18e4a4203bae91e842577598ed38da93221c"
-  integrity sha512-pSi1yeZo1tsGnMqbBeTfTxfEqcZUM1n9RT/7KQVSiBcENB9L0kesbkv5TlZhW6MxOwf0QRVfkaeCc5ymz4/OHw==
+"@skeletonlabs/skeleton@2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@skeletonlabs/skeleton/-/skeleton-2.8.0.tgz#f6ff46b8e2f35b31d61b599cd23fa8911f27b447"
+  integrity sha512-R6spSJSyW9MA6cnVQ8IV7uoYSXxHmP/oWJ9IHdGDU9epPZaZMmOXUHJSzA1gngccB2jFaA/6jXfS1O1CsIlGMg==
   dependencies:
     esm-env "1.0.0"
 
