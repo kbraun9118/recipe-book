@@ -8,7 +8,7 @@ export const actions = {
     const { password } = Object.fromEntries(formData);
 
     if (password === env.PAGE_LOGIN) {
-      cookies.set('authorized', 'true');
+      cookies.set('authorized', 'true', { path: '.' });
       throw redirect(303, '/');
     }
 
