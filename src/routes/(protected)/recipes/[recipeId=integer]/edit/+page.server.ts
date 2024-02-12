@@ -6,6 +6,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { and, eq, inArray } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
+import { zod } from 'sveltekit-superforms/adapters';
 
 export const load = (async ({ parent }) => {
   const { recipe } = await parent();
@@ -25,14 +26,14 @@ export const load = (async ({ parent }) => {
         })),
         tags: recipe.recipesTags?.map((rt) => rt.tag.name) || [],
       },
-      newRecipeSchema,
+      zod(newRecipeSchema),
     ),
   };
 }) satisfies PageServerLoad;
 
 export const actions = {
   default: async ({ request, params }) => {
-    const form = await superValidate(request, newRecipeSchema);
+    const form = await superValidate(request, zod(newRecipeSchema));
 
     if (!form.valid) {
       return fail(400, { form });
