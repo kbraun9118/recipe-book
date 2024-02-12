@@ -9,6 +9,6 @@ export const load = (async () => {
 
 export const actions = {
   logout: async ({ cookies }) => {
-    cookies.delete('authorized');
+    cookies.delete('authorized', {path: '.'});
   },
 } satisfies Actions;

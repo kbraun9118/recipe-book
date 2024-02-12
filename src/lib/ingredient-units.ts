@@ -6,6 +6,7 @@ const ingredientUnits: readonly [string, ...string[]] = [
   'ounces',
   'count',
   'pinch',
+  'cans',
 ];
 
 export default ingredientUnits;

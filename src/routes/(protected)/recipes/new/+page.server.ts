@@ -4,6 +4,7 @@ import { recipes } from '$lib/server/db/schema/recipe';
 import { addIngredient, addTagsToRecipe } from '$lib/server/functions';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
+import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
@@ -12,7 +13,7 @@ export const load = (async () => {
       {
         ingredients: [{ name: '', unit: 'cups', amount: 0 }],
       },
-      newRecipeSchema,
+      zod(newRecipeSchema),
       { errors: false },
     ),
   };
@@ -20,7 +21,7 @@ export const load = (async () => {
 
 export const actions = {
   async default({ request }) {
-    const form = await superValidate(request, newRecipeSchema);
+    const form = await superValidate(request, zod(newRecipeSchema));
 
     if (!form.valid) {
       return fail(400, { form });

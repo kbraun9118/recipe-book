@@ -3,10 +3,10 @@
   import IngredientUnitSelect from '$lib/components/IngredientUnitSelect.svelte';
   import type { NewRecipeSchema } from '$lib/schemas';
   import { Autocomplete, InputChip, popup, type AutocompleteOption } from '@skeletonlabs/skeleton';
-  import type { SuperValidated } from 'sveltekit-superforms';
+  import type { Infer, SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
 
-  export let data: SuperValidated<NewRecipeSchema>;
+  export let data: SuperValidated<Infer<NewRecipeSchema>>;
   export let type: 'create' | 'update';
   export let tags: string[];
 

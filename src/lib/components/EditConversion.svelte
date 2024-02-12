@@ -5,10 +5,10 @@
   import type { UpdateConversionSchema } from '$lib/schemas';
   import type { Conversion } from '$lib/server/db/schema/recipe';
   import { createEventDispatcher } from 'svelte';
-  import type { SuperValidated } from 'sveltekit-superforms';
+  import type { Infer, SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
 
-  export let data: SuperValidated<UpdateConversionSchema>;
+  export let data: SuperValidated<Infer<UpdateConversionSchema>>;
   export let initialData: (Conversion & { previousTo: string }) | null;
 
   const { form, errors } = superForm(data, {

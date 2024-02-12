@@ -71,7 +71,7 @@ export const recipesTags = pgTable(
       .references(() => recipes.id),
   },
   (t) => ({
-    primaryKey: primaryKey(t.recipeId, t.tagId),
+    primaryKey: primaryKey({ columns: [t.recipeId, t.tagId] }),
   }),
 );
 
@@ -94,7 +94,7 @@ export const recipesIngredients = pgTable(
     amount: real('amount').notNull(),
   },
   (t) => ({
-    primaryKey: primaryKey(t.recipeId, t.ingredientId),
+    primaryKey: primaryKey({ columns: [t.recipeId, t.ingredientId] }),
   }),
 );
 
@@ -122,7 +122,7 @@ export const conversions = pgTable(
     to: unitEnum('unit').notNull(),
   },
   (t) => ({
-    primaryKey: primaryKey(t.ingredientId, t.to),
+    primaryKey: primaryKey({ columns: [t.ingredientId, t.to] }),
   }),
 );
 
