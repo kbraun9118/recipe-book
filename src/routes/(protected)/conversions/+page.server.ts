@@ -5,19 +5,20 @@ import { fail, type Actions } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 import { setError, superValidate } from 'sveltekit-superforms/server';
 import type { PageServerLoad } from './$types';
+import { zod } from 'sveltekit-superforms/adapters';
 
 export const load = (async () => {
   return {
     conversions: await db.query.conversions.findMany({ with: { ingredient: true } }),
-    createForm: await superValidate(insertConversionsSchema),
-    updateForm: await superValidate(updateConversionSchema),
+    createForm: await superValidate(zod(insertConversionsSchema)),
+    updateForm: await superValidate(zod(updateConversionSchema)),
     ingredients: await db.query.ingredients.findMany(),
   };
 }) satisfies PageServerLoad;
 
 export const actions = {
   create: async ({ request }) => {
-    const form = await superValidate(request, insertConversionsSchema);
+    const form = await superValidate(request, zod(insertConversionsSchema));
 
     if (!form.valid) {
       return fail(400, { form });
@@ -36,7 +37,7 @@ export const actions = {
     }
   },
   update: async ({ request }) => {
-    const form = await superValidate(request, updateConversionSchema);
+    const form = await superValidate(request, zod(updateConversionSchema));
 
     if (!form.valid) {
       return fail(400, { form });

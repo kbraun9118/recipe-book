@@ -29,22 +29,24 @@ export const actions = {
 
     const data = form.data;
 
-    const [{ recipeId }] = await db
-      .insert(recipes)
-      .values({
-        name: data.name,
-        description: data.description,
-        notes: data.notes,
-        url: data.url,
-        instructions: data.instructions,
-      })
-      .returning({ recipeId: recipes.id });
+    db.transaction(async (tx) => {
+      const [{ recipeId }] = await tx
+        .insert(recipes)
+        .values({
+          name: data.name,
+          description: data.description,
+          notes: data.notes,
+          url: data.url,
+          instructions: data.instructions,
+        })
+        .returning({ recipeId: recipes.id });
 
-    await Promise.all(
-      data.ingredients.map(async (ingredient) => addIngredient(recipeId, ingredient)),
-    );
-    await addTagsToRecipe(recipeId, data.tags);
+      await Promise.all(
+        data.ingredients.map(async (ingredient) => addIngredient(tx, recipeId, ingredient)),
+      );
+      await addTagsToRecipe(tx, recipeId, data.tags);
 
-    throw redirect(303, `/recipes/${recipeId}`);
+      throw redirect(303, `/recipes/${recipeId}`);
+    });
   },
 } satisfies Actions;
