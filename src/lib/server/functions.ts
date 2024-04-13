@@ -1,15 +1,8 @@
-import { and, eq, inArray, type ExtractTablesWithRelations } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { ingredients, recipesIngredients, recipesTags, tags } from './db/schema/recipe';
 import db from './db';
-import type { PgTransaction } from 'drizzle-orm/pg-core';
-import type { PostgresJsQueryResultHKT } from 'drizzle-orm/postgres-js';
-import type { schema } from './db/schema';
+import type { DbTransaction } from './db/schema';
 
-type DbTransaction = PgTransaction<
-  PostgresJsQueryResultHKT,
-  typeof schema,
-  ExtractTablesWithRelations<typeof schema>
->;
 
 export async function addIngredient(
   tx: DbTransaction,
@@ -18,7 +11,7 @@ export async function addIngredient(
 ) {
   const query = and(eq(ingredients.name, ingredient.name), eq(ingredients.unit, ingredient.unit));
 
-  await tx
+  const inserted = await tx
     .insert(ingredients)
     .values({
       name: ingredient.name.trim().toLowerCase(),
@@ -26,16 +19,24 @@ export async function addIngredient(
     })
     .onConflictDoNothing({
       where: query,
-    });
+    })
+    .returning({ id: ingredients.id });
 
-  const ingredientId = await tx.query.ingredients.findFirst({
-    where: query,
-    columns: { id: true },
-  });
+  let ingredientId: number | undefined;
+
+  if (inserted.length > 0) {
+    ingredientId = inserted[0].id;
+  } else {
+    const queryed = await tx.query.ingredients.findFirst({
+      where: query,
+      columns: { id: true },
+    });
+    ingredientId = queryed?.id;
+  }
 
   await tx
     .insert(recipesIngredients)
-    .values({ ingredientId: ingredientId?.id, recipeId, amount: ingredient.amount });
+    .values({ ingredientId: ingredientId, recipeId, amount: ingredient.amount });
 }
 
 export async function addTagsToRecipe(tx: DbTransaction, recipeId: number, tagNames: string[]) {

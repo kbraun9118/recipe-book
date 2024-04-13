@@ -28,9 +28,8 @@ export const actions = {
     }
 
     const data = form.data;
-    let newRecipeId: number | undefined;
 
-    db.transaction(async (tx) => {
+    const recipeId = await db.transaction(async (tx) => {
       const [{ recipeId }] = await tx
         .insert(recipes)
         .values({
@@ -47,11 +46,9 @@ export const actions = {
       );
       await addTagsToRecipe(tx, recipeId, data.tags);
 
-      newRecipeId = recipeId;
+      return recipeId;
     });
 
-    if (newRecipeId) {
-      redirect(303, `/recipes/${newRecipeId}`);
-    }
+    redirect(303, `/recipes/${recipeId}`);
   },
 } satisfies Actions;

@@ -6,7 +6,7 @@ export const newRecipeSchema = insertRecipesSchema.extend({
   ingredients: z
     .array(
       z.object({
-        name: z.string().min(2),
+        name: z.string().min(2).toLowerCase().trim(),
         unit: z.enum([...unitEnum.enumValues]),
         amount: z.number().gt(0),
       }),

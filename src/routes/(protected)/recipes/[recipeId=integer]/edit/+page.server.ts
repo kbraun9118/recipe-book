@@ -20,7 +20,7 @@ export const load = (async ({ parent }) => {
         notes: recipe.notes,
         instructions: recipe.instructions,
         ingredients: recipe.recipesIngredients?.map((ri) => ({
-          name: ri.ingredient.name,
+          name: ri.ingredient.name.trim().toLowerCase(),
           amount: ri.amount,
           unit: ri.ingredient.unit,
         })),
