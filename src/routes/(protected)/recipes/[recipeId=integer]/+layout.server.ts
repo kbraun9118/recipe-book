@@ -15,7 +15,7 @@ export const load = (async ({ params }) => {
     .then((r) => ({ ...r, instructions: DOMPurify.sanitize(r?.instructions || '') }));
 
   if (!recipe) {
-    throw error(404, 'Not Found');
+    error(404, 'Not Found');
   }
   return {
     recipe,

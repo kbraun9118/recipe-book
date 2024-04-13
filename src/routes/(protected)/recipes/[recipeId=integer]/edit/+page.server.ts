@@ -52,7 +52,7 @@ export const actions = {
       ingredients: form.data.ingredients?.map((i) => ({ ...i, name: i.name.trim().toLowerCase() })),
     };
 
-    db.transaction(async (tx) => {
+    await db.transaction(async (tx) => {
       await tx
         .update(recipes)
         .set({
@@ -120,8 +120,8 @@ export const actions = {
         await tx.delete(recipesTags).where(eq(recipesTags.recipeId, recipe.id));
       }
       await addTagsToRecipe(tx, +params.recipeId, form.data.tags);
-
-      throw redirect(304, `/recipes/${params.recipeId}`);
     });
+
+    redirect(304, `/recipes/${params.recipeId}`);
   },
 } satisfies Actions;

@@ -28,6 +28,7 @@ export const actions = {
     }
 
     const data = form.data;
+    let newRecipeId: number | undefined;
 
     db.transaction(async (tx) => {
       const [{ recipeId }] = await tx
@@ -46,7 +47,11 @@ export const actions = {
       );
       await addTagsToRecipe(tx, recipeId, data.tags);
 
-      throw redirect(303, `/recipes/${recipeId}`);
+      newRecipeId = recipeId;
     });
+
+    if (newRecipeId) {
+      redirect(303, `/recipes/${newRecipeId}`);
+    }
   },
 } satisfies Actions;

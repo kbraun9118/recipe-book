@@ -17,7 +17,6 @@ export async function addIngredient(
   ingredient: { name: string; amount: number; unit: string },
 ) {
   const query = and(eq(ingredients.name, ingredient.name), eq(ingredients.unit, ingredient.unit));
-  db.transaction;
 
   await tx
     .insert(ingredients)

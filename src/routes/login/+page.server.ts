@@ -9,7 +9,7 @@ export const actions = {
 
     if (password === env.PAGE_LOGIN) {
       cookies.set('authorized', 'true', { path: '.' });
-      throw redirect(303, '/');
+       redirect(303, '/');
     }
 
     return fail(400, { message: 'invalid password' });
