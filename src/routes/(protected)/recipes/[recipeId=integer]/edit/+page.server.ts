@@ -32,7 +32,7 @@ export const load = (async ({ parent }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-  default: async ({ request, params }) => {
+  async default({ request, params })  {
     const form = await superValidate(request, zod(newRecipeSchema));
 
     if (!form.valid) {

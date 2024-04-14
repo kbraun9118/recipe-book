@@ -8,7 +8,7 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-  logout: async ({ cookies }) => {
-    cookies.delete('authorized', {path: '.'});
+  async logout({ cookies }) {
+    cookies.delete('authorized', { path: '.' });
   },
 } satisfies Actions;

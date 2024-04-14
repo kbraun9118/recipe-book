@@ -12,19 +12,21 @@
 
   const { form, enhance, errors } = superForm(data, { dataType: 'json' });
 
-  const addIngredient = () => {
+  function addIngredient() {
     form.update((f) => {
       f.ingredients?.push({ name: '', unit: 'cups', amount: 0 });
       return f;
     });
-  };
+  }
 
-  const removeIngredient = (index: number) => () => {
-    form.update((f) => {
-      f.ingredients = f.ingredients?.filter((_, i) => i !== index);
-      return f;
-    });
-  };
+  function removeIngredient(index: number) {
+    return function () {
+      form.update((f) => {
+        f.ingredients = f.ingredients?.filter((_, i) => i !== index);
+        return f;
+      });
+    };
+  }
 
   let inputChip = '';
 

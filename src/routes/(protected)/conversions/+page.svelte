@@ -17,7 +17,7 @@
 
       return acc;
     },
-    {}
+    {},
   );
 
   let edit: string | null = '';
@@ -26,7 +26,7 @@
   function enableEdit(ingredientId: number, to: string) {
     edit = ingredientId + to;
     const conversion = data.conversions.find(
-      (conversion) => conversion.ingredientId === ingredientId && conversion.to === to
+      (conversion) => conversion.ingredientId === ingredientId && conversion.to === to,
     );
 
     if (conversion) {

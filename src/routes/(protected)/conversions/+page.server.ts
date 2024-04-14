@@ -17,7 +17,7 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-  create: async ({ request }) => {
+  async create({ request }) {
     const form = await superValidate(request, zod(insertConversionsSchema));
 
     if (!form.valid) {
@@ -36,7 +36,7 @@ export const actions = {
       return setError(form, 'ingredientId', 'Number already has conversion to this unit');
     }
   },
-  update: async ({ request }) => {
+  async update({ request }) {
     const form = await superValidate(request, zod(updateConversionSchema));
 
     if (!form.valid) {
@@ -59,7 +59,7 @@ export const actions = {
       return setError(form, 'ingredientId', 'Number already has conversion to this unit');
     }
   },
-  delete: async ({ request }) => {
+  async delete ({ request })  {
     const { ingredientId, to } = Object.fromEntries(await request.formData());
 
     await db
