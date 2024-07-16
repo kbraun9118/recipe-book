@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@floating-ui/dom": "1.6.7",
-    "@fortawesome/free-solid-svg-icons": "6.5.2",
+    "@fortawesome/free-solid-svg-icons": "6.6.0",
     "@skeletonlabs/skeleton": "2.9.1",
     "@skeletonlabs/tw-plugin": "0.4.0",
     "@sveltejs/adapter-auto": "3.2.2",
