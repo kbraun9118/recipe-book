@@ -5,9 +5,13 @@
   import EditConversion from '$lib/components/EditConversion.svelte';
   import NewConversion from '$lib/components/NewConversion.svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  $: ingredientConversions = data.conversions.reduce<{ [key: number]: typeof data.conversions }>(
+  let { data }: Props = $props();
+
+  let ingredientConversions = $derived(data.conversions.reduce<{ [key: number]: typeof data.conversions }>(
     (acc, item) => {
       if (acc[item.ingredientId]) {
         acc[item.ingredientId].push(item);
@@ -18,10 +22,10 @@
       return acc;
     },
     {},
-  );
+  ));
 
-  let edit: string | null = '';
-  let editValue: (Conversion & { previousTo: string }) | null = null;
+  let edit: string | null = $state('');
+  let editValue: (Conversion & { previousTo: string }) | null = $state(null);
 
   function enableEdit(ingredientId: number, to: string) {
     edit = ingredientId + to;

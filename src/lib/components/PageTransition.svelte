@@ -2,7 +2,12 @@
   import { cubicIn, cubicOut } from 'svelte/easing';
   import { fly } from 'svelte/transition';
 
-  export let url: string;
+  interface Props {
+    url: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let { url, children }: Props = $props();
 
   const duration = 300;
   const delay = duration + 100;
@@ -14,6 +19,6 @@
 
 {#key url}
   <div in:fly={transitionIn} out:fly={transitionOut}>
-    <slot />
+    {@render children?.()}
   </div>
 {/key}

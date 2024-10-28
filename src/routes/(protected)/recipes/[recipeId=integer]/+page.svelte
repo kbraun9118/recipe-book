@@ -3,7 +3,11 @@
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import type { PageData } from './$types';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   function formatInstructions(instructions: string): string {
     return instructions
@@ -109,7 +113,7 @@
                       {conversion.to}
                     </p>
                   {/each}
-                  <div class="arrow variant-glass-secondary" />
+                  <div class="arrow variant-glass-secondary"></div>
                 </div>
               {:else}
                 <span class="font-bold">{ingredient.ingredient.name}</span>

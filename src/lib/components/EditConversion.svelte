@@ -8,8 +8,12 @@
   import type { Infer, SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
 
-  export let data: SuperValidated<Infer<UpdateConversionSchema>>;
-  export let initialData: (Conversion & { previousTo: string }) | null;
+  interface Props {
+    data: SuperValidated<Infer<UpdateConversionSchema>>;
+    initialData: (Conversion & { previousTo: string }) | null;
+  }
+
+  let { data, initialData }: Props = $props();
 
   const { form, errors } = superForm(data, {
     onUpdate({ form }) {
@@ -45,7 +49,7 @@
       <button
         class="btn variant-filled-error"
         type="button"
-        on:click={() => {
+        onclick={() => {
           errors.clear();
           dispatch('cancel');
         }}>Cancel</button>

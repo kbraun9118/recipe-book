@@ -6,9 +6,13 @@
   import type { Infer, SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
 
-  export let data: SuperValidated<Infer<NewRecipeSchema>>;
-  export let type: 'create' | 'update';
-  export let tags: string[];
+  interface Props {
+    data: SuperValidated<Infer<NewRecipeSchema>>;
+    type: 'create' | 'update';
+    tags: string[];
+  }
+
+  let { data, type, tags }: Props = $props();
 
   const { form, enhance, errors } = superForm(data, { dataType: 'json' });
 
@@ -28,7 +32,7 @@
     };
   }
 
-  let inputChip = '';
+  let inputChip = $state('');
 
   const inputChipAutocompleteOptions: AutocompleteOption[] = tags.map((t) => ({
     label: t,
@@ -65,7 +69,7 @@
           <textarea
             class="textarea"
             class:input-error={$errors.description}
-            bind:value={$form.description} />
+            bind:value={$form.description}></textarea>
         </label>
         <ErrorText fieldName="description" text={$errors.description} />
       </div>
@@ -74,11 +78,11 @@
           >Notes<textarea
             class="textarea"
             class:input-error={$errors.notes}
-            bind:value={$form.notes} /></label>
+            bind:value={$form.notes}></textarea></label>
         <ErrorText fieldName="notes" text={$errors.notes} />
       </div>
       <div>
-        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <!-- svelte-ignore a11y_label_has_associated_control -->
         <label class="label">
           Tags*
           <div
@@ -146,7 +150,7 @@
                       <button
                         class="btn variant-outline-error font-bold hover:variant-filled-error w-12"
                         type="button"
-                        on:click={removeIngredient(i)}
+                        onclick={removeIngredient(i)}
                         >-
                       </button>
                     {/if}
@@ -164,7 +168,7 @@
           <button
             class="btn variant-outline-primary font-bold hover:variant-filled-primary my-2 w-12"
             type="button"
-            on:click={addIngredient}
+            onclick={addIngredient}
             >+
           </button>
         </div>
@@ -178,13 +182,13 @@
             class="textarea"
             class:input-error={$errors.instructions}
             bind:value={$form.instructions}
-            rows="10" /></label>
+            rows="10"></textarea></label>
         <ErrorText fieldName="instructions" text={$errors.instructions} />
       </div>
     </div>
   </div>
   <div>
     <button class="btn variant-filled capitalize">{type}</button>
-    <button class="btn variant-outline" type="button" on:click={() => history.back()}>Back</button>
+    <button class="btn variant-outline" type="button" onclick={() => history.back()}>Back</button>
   </div>
 </form>

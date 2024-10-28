@@ -1,13 +1,23 @@
 <script lang="ts">
   import ingredientUnits from '$lib/ingredient-units';
 
-  export let value: string;
-  export let name = '';
-  export let id = '';
-  export let isInput = true;
-  let clazz = '';
+  interface Props {
+    value: string;
+    name?: string;
+    id?: string;
+    isInput?: boolean;
+    class?: string;
+  }
 
-  export { clazz as class };
+  let {
+    value = $bindable(),
+    name = '',
+    id = '',
+    isInput = true,
+    class: clazz = ''
+  }: Props = $props();
+
+  
 </script>
 
 <select {id} class={`capitalize ${isInput && 'input'} ${clazz}`} {name} bind:value>

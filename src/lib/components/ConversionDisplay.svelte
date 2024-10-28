@@ -3,8 +3,12 @@
   import type { Conversion } from '$lib/server/db/schema/recipe';
   import { createEventDispatcher } from 'svelte';
 
-  export let conversion: Conversion;
-  export let edit: boolean;
+  interface Props {
+    conversion: Conversion;
+    edit: boolean;
+  }
+
+  let { conversion = $bindable(), edit }: Props = $props();
 
   const dispatch = createEventDispatcher<{ edited: void }>();
 </script>
@@ -19,7 +23,7 @@
       <button
         class="btn variant-filled-warning py-2"
         type="button"
-        on:click={() => dispatch('edited')}>Edit</button>
+        onclick={() => dispatch('edited')}>Edit</button>
       <button class=" btn variant-filled-error py-2" formaction="?/delete">Delete</button>
     {/if}
   </div>
