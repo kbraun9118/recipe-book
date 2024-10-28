@@ -6,14 +6,18 @@
   import type { Infer, SuperValidated } from 'sveltekit-superforms';
   import { superForm } from 'sveltekit-superforms/client';
 
-  export let data: SuperValidated<Infer<typeof insertConversionsSchema>>;
-  export let ingredients: {
+  interface Props {
+    data: SuperValidated<Infer<typeof insertConversionsSchema>>;
+    ingredients: {
     id: number;
     name: string;
     unit: string;
   }[];
+  }
 
-  let create = false;
+  let { data, ingredients }: Props = $props();
+
+  let create = $state(false);
 
   const { form, errors, reset, enhance } = superForm(data, {
     onUpdated(event) {
@@ -25,7 +29,7 @@
     },
   });
 
-  let recipeName = '';
+  let recipeName = $state('');
   let recipeOptions: AutocompleteOption[] = ingredients.map((i) => {
     const value = `${i.name[0].toUpperCase() + i.name.slice(1)} (${
       i.unit[0].toUpperCase() + i.unit.slice(1)
@@ -84,7 +88,7 @@
                 on:selection={onRecipeNameselected} />
             </div>
           </label>
-          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <!-- svelte-ignore a11y_label_has_associated_control -->
           <label class="label">
             Unit
             <IngredientUnitSelect name="to" bind:value={$form.to} />
@@ -97,12 +101,12 @@
         <button
           class="btn variant-filled-error"
           type="button"
-          on:click={() => {
+          onclick={() => {
             create = false;
           }}>Cancel</button>
       </form>
     </div>
   {:else}
-    <button class="btn variant-filled-secondary" on:click={() => (create = true)}>Create</button>
+    <button class="btn variant-filled-secondary" onclick={() => (create = true)}>Create</button>
   {/if}
 </div>

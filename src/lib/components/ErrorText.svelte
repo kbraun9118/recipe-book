@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let text: string[] | undefined;
-  export let fieldName: string;
+  interface Props {
+    text: string[] | undefined;
+    fieldName: string;
+  }
+
+  let { text, fieldName }: Props = $props();
 </script>
 
 {#if text}

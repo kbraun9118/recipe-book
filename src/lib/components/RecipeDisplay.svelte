@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { RecipeWithTags } from '$lib/server/db/schema/recipe';
 
-  export let recipe: RecipeWithTags;
+  interface Props {
+    recipe: RecipeWithTags;
+  }
+
+  let { recipe }: Props = $props();
 </script>
 
 <a class="block card card-hover variant-glass-primary p-4" href={`/recipes/${recipe.id}`}>

@@ -2,7 +2,11 @@
   import RecipeDisplay from '$lib/components/RecipeDisplay.svelte';
   import type { PageServerData } from './$types';
 
-  export let data: PageServerData;
+  interface Props {
+    data: PageServerData;
+  }
+
+  let { data }: Props = $props();
 
 </script>
 
