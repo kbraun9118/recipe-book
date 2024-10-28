@@ -34,7 +34,7 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-svelte": "2.45.1",
     "isomorphic-dompurify": "2.16.0",
-    "pg": "8.13.0",
+    "pg": "8.13.1",
     "postcss": "8.4.47",
     "postgres": "3.4.4",
     "prettier": "3.3.3",
