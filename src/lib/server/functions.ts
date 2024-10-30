@@ -3,7 +3,6 @@ import { ingredients, recipesIngredients, recipesTags, tags } from './db/schema/
 import db from './db';
 import type { DbTransaction } from './db/schema';
 
-
 export async function addIngredient(
   tx: DbTransaction,
   recipeId: number,

@@ -7,7 +7,6 @@
   }
 
   let { data }: Props = $props();
-
 </script>
 
 <div class="space-y-2">
@@ -15,7 +14,7 @@
   <ul class="space-y-2">
     {#each data.recipes as recipe (recipe.id)}
       <li>
-        <RecipeDisplay recipe={recipe} />
+        <RecipeDisplay {recipe} />
       </li>
     {/each}
   </ul>

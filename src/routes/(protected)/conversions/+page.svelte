@@ -11,8 +11,8 @@
 
   let { data }: Props = $props();
 
-  let ingredientConversions = $derived(data.conversions.reduce<{ [key: number]: typeof data.conversions }>(
-    (acc, item) => {
+  let ingredientConversions = $derived(
+    data.conversions.reduce<{ [key: number]: typeof data.conversions }>((acc, item) => {
       if (acc[item.ingredientId]) {
         acc[item.ingredientId].push(item);
       } else {
@@ -20,9 +20,8 @@
       }
 
       return acc;
-    },
-    {},
-  ));
+    }, {}),
+  );
 
   let edit: string | null = $state('');
   let editValue: (Conversion & { previousTo: string }) | null = $state(null);

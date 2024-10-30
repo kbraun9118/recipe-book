@@ -14,10 +14,8 @@
     name = '',
     id = '',
     isInput = true,
-    class: clazz = ''
+    class: clazz = '',
   }: Props = $props();
-
-  
 </script>
 
 <select {id} class={`capitalize ${isInput && 'input'} ${clazz}`} {name} bind:value>

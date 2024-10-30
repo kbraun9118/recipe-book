@@ -9,10 +9,10 @@
   interface Props {
     data: SuperValidated<Infer<typeof insertConversionsSchema>>;
     ingredients: {
-    id: number;
-    name: string;
-    unit: string;
-  }[];
+      id: number;
+      name: string;
+      unit: string;
+    }[];
   }
 
   let { data, ingredients }: Props = $props();
@@ -88,12 +88,16 @@
                 on:selection={onRecipeNameselected} />
             </div>
           </label>
-          <!-- svelte-ignore a11y_label_has_associated_control -->
           <label class="label">
             Unit
             <IngredientUnitSelect name="to" bind:value={$form.to} />
           </label>
-          <label>Scale<input class="input" class:input-error={$errors.scale} name="scale" bind:value={$form.scale} /></label>
+          <label
+            >Scale<input
+              class="input"
+              class:input-error={$errors.scale}
+              name="scale"
+              bind:value={$form.scale} /></label>
         </div>
         <ErrorText fieldName="ingredient name" text={$errors.ingredientId} />
         <ErrorText fieldName="scale" text={$errors.scale} />

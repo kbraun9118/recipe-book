@@ -32,7 +32,7 @@ export const actions = {
       });
 
       return { form };
-    } catch (err) {
+    } catch (_) {
       return setError(form, 'ingredientId', 'Number already has conversion to this unit');
     }
   },
@@ -55,11 +55,11 @@ export const actions = {
         );
 
       return { form };
-    } catch (err) {
+    } catch (_) {
       return setError(form, 'ingredientId', 'Number already has conversion to this unit');
     }
   },
-  async delete ({ request })  {
+  async delete({ request }) {
     const { ingredientId, to } = Object.fromEntries(await request.formData());
 
     await db

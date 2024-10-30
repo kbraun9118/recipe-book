@@ -20,14 +20,26 @@ export default ts.config(
   },
   {
     files: ['**/*.svelte'],
-
     languageOptions: {
       parserOptions: {
         parser: ts.parser,
       },
     },
+    rules: {},
   },
   {
     ignores: ['build/', '.svelte-kit/', 'dist/'],
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+    },
   },
 );

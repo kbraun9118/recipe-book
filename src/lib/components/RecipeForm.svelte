@@ -78,11 +78,11 @@
           >Notes<textarea
             class="textarea"
             class:input-error={$errors.notes}
-            bind:value={$form.notes}></textarea></label>
+            bind:value={$form.notes}></textarea
+          ></label>
         <ErrorText fieldName="notes" text={$errors.notes} />
       </div>
       <div>
-        <!-- svelte-ignore a11y_label_has_associated_control -->
         <label class="label">
           Tags*
           <div
@@ -182,7 +182,8 @@
             class="textarea"
             class:input-error={$errors.instructions}
             bind:value={$form.instructions}
-            rows="10"></textarea></label>
+            rows="10"></textarea
+          ></label>
         <ErrorText fieldName="instructions" text={$errors.instructions} />
       </div>
     </div>
