@@ -52,6 +52,6 @@
   },
   "type": "module",
   "dependencies": {
-    "typescript-eslint": "^8.13.0"
+    "typescript-eslint": "8.13.0"
   }
 }
