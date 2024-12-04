@@ -37,7 +37,7 @@
     "pg": "8.13.1",
     "postcss": "8.4.49",
     "postgres": "3.4.5",
-    "prettier": "3.4.1",
+    "prettier": "3.4.2",
     "prettier-plugin-svelte": "3.3.2",
     "svelte": "5.5.3",
     "svelte-check": "4.1.1",
