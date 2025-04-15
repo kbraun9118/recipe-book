@@ -28,7 +28,7 @@
     "@typescript-eslint/parser": "8.22.0",
     "autoprefixer": "10.4.21",
     "dotenv": "16.4.7",
-    "drizzle-kit": "0.29.1",
+    "drizzle-kit": "0.31.0",
     "drizzle-orm": "0.37.0",
     "drizzle-zod": "0.5.1",
     "eslint": "9.23.0",
